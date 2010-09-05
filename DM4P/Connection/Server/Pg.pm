@@ -1,4 +1,4 @@
-package DM4P::Connection::Server::MySQL;
+package DM4P::Connection::Server::Pg;
 
 use strict;
 use warnings;
@@ -10,17 +10,17 @@ use base qw(DM4P::Connection::Base);
 # ------------------------------------------------------------------------------
 # Function: new
 #
-#   Creates an new DM4P::Connection::MySQL Object.
+#   Creates an new DM4P::Connection::Pg Object.
 #
 # Returns:
 #
-#   DM4P::Connection::MySQL
+#   DM4P::Connection::Pg
 sub new {
    my $that = shift;
    my $self = $that->SUPER::new(@_);
    
-   $self->{'dbi-type'} = 'DBD';
-
+   $self->{'dbi-type'} = 'dbi';
+   
    return $self;
 }
 
@@ -39,8 +39,9 @@ sub new {
 #   DBI Connection Handle.
 sub connect {
    my $self = shift;
-
+   
    $self->{'__db_connection'} = DBI->connect($self->dsn, $self->username, $self->password);
+   
    if(!$self->{'__db_connection'}) {
       DM4P::Exception::Connect->throw(error => 'Cannot connect to Database');
       return 0;
@@ -52,6 +53,6 @@ sub connect {
 # Function: class_type
 #
 #    Internat Use.
-sub class_type { shift; return "MySQL"; }
+sub class_type { shift; return "Pg"; }
 
 1;

@@ -4,14 +4,20 @@ use strict;
 use warnings;
 
 use DM4P::Connection::Base;
-
 use DM4P::Exception::Connect;
 
-use vars qw(%connections %conn_map);
+use vars qw(%connections $conn_map);
 
-%conn_map = (
-   'mysql'  => 'MySQL'
-);
+$conn_map = {
+   'mysql'  => {
+         name => 'MySQL',
+         dbiclass => 'mysql'
+      },
+   'pg'     => {
+         name => 'Pg',
+         dbiclass => 'Pg'
+   }
+};
 
 # Function: setup
 #
@@ -47,7 +53,7 @@ sub create_connection {
       DM4P::Exception::Connect->throw(error => 'No Databasetype defined.');
    }
    
-   my $type = $conn_map{$db};
+   my $type = $conn_map->{$db}->{'name'};
    require "DM4P/SQL/Dialects/$type.pm";
    require "DM4P/Connection/Server/$type.pm";
    

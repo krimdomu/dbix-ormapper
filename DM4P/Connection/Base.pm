@@ -121,7 +121,7 @@ sub type {
    my $self = shift;
    my $u = URI->new($self->uri);
    
-   return $u->scheme;
+   return $DM4P::conn_map->{$u->scheme}->{'dbiclass'};
 }
 
 # Function: dsn
@@ -134,7 +134,7 @@ sub type {
 sub dsn {
    my $self = shift;
    
-   my $str = "DBI:"
+   my $str = $self->{'dbi-type'} . ":"
             . $self->type() . ":"
             . "database="
             . $self->db() . ";"

@@ -58,7 +58,7 @@ sub type {
 #    DM4P::SQL::Query::SELECT
 sub on {
    my $self = shift;
-   $self->{'__on'} = DM4P::SQL::Dialects::MySQL::parse_names($_[0]);
+   $self->{'__on'} = $_[0];
    
    return $self->query;
 }

@@ -1,4 +1,4 @@
-package DM4P::SQL::Dialects::MySQL::SELECT;
+package DM4P::SQL::Dialects::Pg::SELECT;
 
 use strict;
 use warnings;
@@ -25,8 +25,8 @@ sub get_fields {
          $str .= ", ";
       }
       
-      $str .= DM4P::SQL::Dialects::MySQL::parse_names($key);
-      $str .= DM4P::SQL::Dialects::MySQL::parse_AS_names($val);
+      $str .= DM4P::SQL::Dialects::Pg::parse_names($key);
+      $str .= DM4P::SQL::Dialects::Pg::parse_AS_names($val);
    }
    
    return $str;
@@ -49,9 +49,9 @@ sub get_join {
    
    my $str = "";
    
-   $str = sprintf($DM4P::SQL::Dialects::MySQL::JOIN->{$join->type}, 
+   $str = sprintf($DM4P::SQL::Dialects::Pg::JOIN->{$join->type}, 
          $join->{'__table'},
-         DM4P::SQL::Dialects::MySQL::parse_names($join->{'__on'})
+         DM4P::SQL::Dialects::Pg::parse_names($join->{'__on'})
       );
    
    return $str;
@@ -87,7 +87,7 @@ sub get_where {
    shift;
    my $where = shift;
    
-   my $str = DM4P::SQL::Dialects::MySQL::parse_names($where);
+   my $str = DM4P::SQL::Dialects::Pg::parse_names($where);
    
    return $str;
 }
