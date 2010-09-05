@@ -3,31 +3,34 @@ package DM4P::SQL::Dialects::Base;
 use strict;
 use warnings;
 
-use vars qw($JOIN);
-
-$JOIN = {
-   JOIN_LEFT    => 'LEFT JOIN #%s ON %s',
-   JOIN_NORMAL  => 'JOIN #%s ON %s',
-   JOIN_INNER   => 'INNER JOIN #%s ON %s'
-};
+sub new {
+   my $that = shift;
+   my $proto = ref($that) || $that;
+   my $self = {};
+   
+   bless($self, $proto);
+   return $self;
+}
 
 sub parse_names {
+   my $self = shift;
    my $str = shift;
-   my $sep = shift;
    
    if($str =~ /^[a-zA-Z0-9_]+$/) {
-      return $sep . $str . $sep;
+      return $self->{'separator'} . $str . $self->{'separator'};
    }
    
+   my $sep = $self->{'separator'};
    $str =~ s/#([a-zA-Z0-9_]+)/$sep$1$sep/gms;
    
    return $str;
 }
 
 sub parse_AS_names {
+   my $self = shift;
    my $str = shift;
    
-   $str = parse_names($str);
+   $str = $self->parse_names($str);
    
    return ' AS ' . $str;
 }

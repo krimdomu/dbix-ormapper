@@ -1,9 +1,9 @@
-package DM4P::SQL::Dialects::MySQL::UPDATE;
+package DM4P::SQL::Dialects::Base::UPDATE;
 
 use strict;
 use warnings;
 
-use base qw(DM4P::SQL::Dialects::MySQL);
+use base qw(DM4P::SQL::Dialects::Base);
 
 # ------------------------------------------------------------------------------
 # Group: Constructor
@@ -55,18 +55,18 @@ sub get_fields {
 # 
 #   String
 sub get_table {
-   shift;
+   my $self = shift;
    
    my $t = shift;
    
-   return '`' . $t . '`';
+   return $self->{'separator'} . $t . $self->{'separator'};
 }
 
 # Function: get_update_string
 #
 #   
 sub get_update_fields {
-   shift;
+   my $self = shift;
    my $fields = shift;
    my $str = "";
    
@@ -74,7 +74,7 @@ sub get_update_fields {
       if($str ne "") {
          $str .= ", ";
       }
-      $str .= '`' . $k->{'name'} . '`=?'
+      $str .= $self->{'separator'} . $k->{'name'} . $self->{'separator'} . '=?';
    }
    
    return $str;

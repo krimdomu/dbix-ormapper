@@ -12,6 +12,8 @@ use DM4P::SQL::Query::INSERT;
 use DM4P::SQL::Query::DELETE;
 use DM4P::SQL::Query::UPDATE;
 
+use DM4P::SQL::Dialects::Base;
+
 use DM4P::SQL::Statement;
 
 use DM4P::Exception::Connect;

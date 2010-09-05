@@ -1,9 +1,9 @@
-package DM4P::SQL::Dialects::MySQL::DELETE;
+package DM4P::SQL::Dialects::Base::DELETE;
 
 use strict;
 use warnings;
 
-use base qw(DM4P::SQL::Dialects::MySQL);
+use base qw(DM4P::SQL::Dialects::Base);
 
 # ------------------------------------------------------------------------------
 # Group: Constructor
@@ -36,11 +36,11 @@ sub new {
 # 
 #   String
 sub get_table {
-   shift;
+   my $self = shift;
    
    my $t = shift;
    
-   return '`' . $t . '`';
+   return $self->{'separator'} . $t . $self->{'separator'};
 }
 
 

@@ -1,9 +1,9 @@
-package DM4P::SQL::Dialects::MySQL::SELECT;
+package DM4P::SQL::Dialects::Base::SELECT;
 
 use strict;
 use warnings;
 
-use base qw(DM4P::SQL::Dialects::MySQL);
+use base qw(DM4P::SQL::Dialects::Base);
 
 # ------------------------------------------------------------------------------
 # Group: Constructor
@@ -70,12 +70,12 @@ sub get_join {
    
    my $str = "";
    
-   $str = sprintf($DM4P::SQL::Dialects::MySQL::JOIN->{$join->type}, 
+   $str = sprintf($self->{JOIN}->{$join->type}, 
          $join->{'__table'},
-         $self->parse_names($join->{'__on'})
+         $join->{'__on'}
       );
    
-   return $str;
+   return $self->parse_names($str);
 }
 
 # Function: get_tables

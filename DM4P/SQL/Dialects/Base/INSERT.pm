@@ -1,9 +1,9 @@
-package DM4P::SQL::Dialects::MySQL::INSERT;
+package DM4P::SQL::Dialects::Base::INSERT;
 
 use strict;
 use warnings;
 
-use base qw(DM4P::SQL::Dialects::MySQL);
+use base qw(DM4P::SQL::Dialects::Base);
 
 # ------------------------------------------------------------------------------
 # Group: Constructor
@@ -36,7 +36,7 @@ sub new {
 # 
 #   String
 sub get_fields {
-   shift;
+   my $self = shift;
    my $str = "";
    
    for my $k (@_) {
@@ -44,7 +44,7 @@ sub get_fields {
          $str .= ", ";
       }
       
-      $str .= '`' . $k->{'name'} . '`';
+      $str .= $self->{'separator'} . $k->{'name'} . $self->{'separator'};
    }
    
    return $str;
@@ -62,11 +62,11 @@ sub get_fields {
 # 
 #   String
 sub get_table {
-   shift;
+   my $self = shift;
    
    my $t = shift;
    
-   return '`' . $t . '`';
+   return $self->{'separator'} . $t . $self->{'separator'};
 }
 
 1;
