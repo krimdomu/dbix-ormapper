@@ -3,9 +3,9 @@ package DM4P;
 use strict;
 use warnings;
 
-use Error qw(:try);
-
 use DM4P::Connection::Base;
+
+use DM4P::Exception::Connect;
 
 use vars qw(%connections %conn_map);
 
@@ -44,7 +44,7 @@ sub create_connection {
    my ($db) = ($conn_str =~ m/^(.*?):/);
   
    if(!$db) {
-      throw Error::Simple -text => 'No Database Type set.';
+      DM4P::Exception::Connect->throw(error => 'No Databasetype defined.');
    }
    
    my $type = $conn_map{$db};
@@ -74,12 +74,12 @@ sub get_connection {
          return $connections{$_[0]}; 
       } else
       {
-         throw Error::Simple -text => 'No Connection found';
+         DM4P::Exception::ConnectionNotFound->throw(error => 'Connection {' . $_[0] . '} not found.');
       }
    }
    
    if(!defined($connections{'default'})) {
-      throw Error::Simple -text => 'No Connection found';
+         DM4P::Exception::ConnectionNotFound->throw(error => 'Connection {default} not found.');
    }
    return $connections{'default'};
 }
