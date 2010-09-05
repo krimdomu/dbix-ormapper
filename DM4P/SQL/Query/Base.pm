@@ -60,8 +60,10 @@ sub to_s {
 #    Internal Use Only.
 sub get_class {
    my $self = shift;
+   my $type = shift;
    
-   return "DM4P::SQL::Dialects::" . $self->class_type . "::";
+   my $class = "DM4P::SQL::Dialects::" . $self->class_type . "::$type";
+   return $class->new();
 }
 
 # Function: has_bind

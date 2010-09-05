@@ -138,7 +138,7 @@ sub __get_sql {
    
    my $str = "SELECT ";
    
-   my $class = $self->get_class() . "SELECT";
+   my $class = $self->get_class("SELECT");
    
    $str .= $class->get_fields(@{$self->{'__fields'}});
    $str .= " FROM ";

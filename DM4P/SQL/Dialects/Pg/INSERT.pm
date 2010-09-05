@@ -3,6 +3,27 @@ package DM4P::SQL::Dialects::Pg::INSERT;
 use strict;
 use warnings;
 
+use base qw(DM4P::SQL::Dialects::Pg);
+
+# ------------------------------------------------------------------------------
+# Group: Constructor
+# ------------------------------------------------------------------------------
+# Function: new
+#
+#   Creates an new DM4P::SQL::Query Object.
+#
+# Returns:
+#
+#   DM4P::SQL::Dialects::MySQL::DELETE
+sub new {
+   my $that = shift;
+   my $proto = ref($that) || $that;
+   my $self = {};
+   
+   bless($self, $proto);
+   return $self;
+}
+
 # Function: get_fields
 #
 #   Returns the SQL String for the fields.

@@ -16,7 +16,17 @@ $JOIN = {
    JOIN_INNER   => 'INNER JOIN `%s` ON %s'
 };
 
+sub new {
+   my $that = shift;
+   my $proto = ref($that) || $that;
+   my $self = {};
+   
+   bless($self, $proto);
+   return $self;
+}
+
 sub parse_names {
+   my $self = shift;
    my $str = shift;
    
    if($str =~ /^[a-zA-Z0-9_]+$/) {
@@ -29,9 +39,10 @@ sub parse_names {
 }
 
 sub parse_AS_names {
+   my $self = shift;
    my $str = shift;
    
-   $str = parse_names($str);
+   $str = $self->parse_names($str);
    
    return ' AS ' . $str;
 }

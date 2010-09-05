@@ -10,11 +10,11 @@ use base qw(DM4P::SQL::Query::Base);
 # ------------------------------------------------------------------------------
 # Function: new
 #
-#   Creates the DM4P::SQL::Query::SELECT Object.
+#   Creates the DM4P::SQL::Query::INSERT Object.
 #
 # Returns:
 #
-#   DM4P::SQL::Query::SELECT
+#   DM4P::SQL::Query::INSERT
 sub new {
    my $that = shift;
    my $self = $that->SUPER::new(@_);
@@ -93,7 +93,7 @@ sub get_bind {
 
 # Function: __get_sql
 #
-#   Create the SELECT SQL Statement.
+#   Create the INSERT SQL Statement.
 #
 # Returns:
 #
@@ -103,7 +103,7 @@ sub __get_sql {
    
    my $str = "INSERT INTO ";
    
-   my $class = $self->get_class() . "INSERT";
+   my $class = $self->get_class("INSERT");
    
    $str .= $class->get_table($self->{'__table'});
    $str .= " (" . $class->get_fields(@{$self->{'__fields'}}) . ")";

@@ -125,7 +125,7 @@ sub __get_sql {
    
    my $str = "UPDATE ";
    
-   my $class = $self->get_class() . "UPDATE";
+   my $class = $self->get_class("UPDATE");
    
    $str .= $class->get_table($self->{'__table'});
    $str .= " SET ";

@@ -3,6 +3,27 @@ package DM4P::SQL::Dialects::Pg::DELETE;
 use strict;
 use warnings;
 
+use base qw(DM4P::SQL::Dialects::Pg);
+
+# ------------------------------------------------------------------------------
+# Group: Constructor
+# ------------------------------------------------------------------------------
+# Function: new
+#
+#   Creates an new DM4P::SQL::Query Object.
+#
+# Returns:
+#
+#   DM4P::SQL::Dialects::Pg::DELETE
+sub new {
+   my $that = shift;
+   my $proto = ref($that) || $that;
+   my $self = {};
+   
+   bless($self, $proto);
+   return $self;
+}
+
 # Function: get_table
 #
 #   Returns the SQL String for the tables.
@@ -35,10 +56,10 @@ sub get_table {
 #
 #   String
 sub get_where {
-   shift;
+   my $self = shift;
    my $where = shift;
    
-   my $str = DM4P::SQL::Dialects::Pg::parse_names($where);
+   my $str = $self->parse_names($where);
    
    return $str;
 }

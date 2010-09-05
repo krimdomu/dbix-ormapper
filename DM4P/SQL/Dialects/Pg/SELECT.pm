@@ -3,6 +3,27 @@ package DM4P::SQL::Dialects::Pg::SELECT;
 use strict;
 use warnings;
 
+use base qw(DM4P::SQL::Dialects::Pg);
+
+# ------------------------------------------------------------------------------
+# Group: Constructor
+# ------------------------------------------------------------------------------
+# Function: new
+#
+#   Creates an new DM4P::SQL::Query Object.
+#
+# Returns:
+#
+#   DM4P::SQL::Dialects::MySQL::DELETE
+sub new {
+   my $that = shift;
+   my $proto = ref($that) || $that;
+   my $self = {};
+   
+   bless($self, $proto);
+   return $self;
+}
+
 # Function: get_fields
 #
 #   Returns the SQL String for the fields.
@@ -15,7 +36,7 @@ use warnings;
 # 
 #   String
 sub get_fields {
-   shift;
+   my $self = shift;
    my $str = "";
    
    for my $f (@_) {
@@ -25,8 +46,8 @@ sub get_fields {
          $str .= ", ";
       }
       
-      $str .= DM4P::SQL::Dialects::Pg::parse_names($key);
-      $str .= DM4P::SQL::Dialects::Pg::parse_AS_names($val);
+      $str .= $self->parse_names($key);
+      $str .= $self->parse_AS_names($val);
    }
    
    return $str;
@@ -44,14 +65,14 @@ sub get_fields {
 #
 #   String
 sub get_join {
-   shift;
+   my $self = shift;
    my $join = shift;
    
    my $str = "";
    
    $str = sprintf($DM4P::SQL::Dialects::Pg::JOIN->{$join->type}, 
          $join->{'__table'},
-         DM4P::SQL::Dialects::Pg::parse_names($join->{'__on'})
+         $self->parse_names($join->{'__on'})
       );
    
    return $str;
@@ -69,7 +90,8 @@ sub get_join {
 # 
 #   String
 sub get_tables {
-   return get_fields(@_);
+   my $self = shift;
+   return $self->get_fields(@_);
 }
 
 # Function: get_where
@@ -84,10 +106,10 @@ sub get_tables {
 #
 #   String
 sub get_where {
-   shift;
+   my $self = shift;
    my $where = shift;
    
-   my $str = DM4P::SQL::Dialects::Pg::parse_names($where);
+   my $str = $self->parse_names($where);
    
    return $str;
 }

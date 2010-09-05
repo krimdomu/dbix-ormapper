@@ -75,7 +75,7 @@ sub __get_sql {
    
    my $str = "DELETE FROM ";
    
-   my $class = $self->get_class() . "DELETE";
+   my $class = $self->get_class("DELETE");
    
    $str .= $class->get_table($self->{'__table'});
    $str .= " WHERE ";

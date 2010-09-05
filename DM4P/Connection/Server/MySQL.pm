@@ -19,7 +19,7 @@ sub new {
    my $that = shift;
    my $self = $that->SUPER::new(@_);
    
-   $self->{'dbi-type'} = 'DBD';
+   $self->{'dbi-type'} = 'dbi';
 
    return $self;
 }
@@ -41,6 +41,7 @@ sub connect {
    my $self = shift;
 
    $self->{'__db_connection'} = DBI->connect($self->dsn, $self->username, $self->password);
+   
    if(!$self->{'__db_connection'}) {
       DM4P::Exception::Connect->throw(error => 'Cannot connect to Database');
       return 0;
