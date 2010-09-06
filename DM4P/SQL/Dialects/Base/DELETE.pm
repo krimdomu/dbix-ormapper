@@ -40,7 +40,7 @@ sub get_table {
    
    my $t = shift;
    
-   return $self->{'separator'} . $t . $self->{'separator'};
+   return "#$t";
 }
 
 

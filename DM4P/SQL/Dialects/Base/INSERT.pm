@@ -44,7 +44,7 @@ sub get_fields {
          $str .= ", ";
       }
       
-      $str .= $self->{'separator'} . $k->{'name'} . $self->{'separator'};
+      $str .= "#" . $k->{'name'};
    }
    
    return $str;
@@ -66,7 +66,7 @@ sub get_table {
    
    my $t = shift;
    
-   return $self->{'separator'} . $t . $self->{'separator'};
+   return "#".$t;
 }
 
 1;

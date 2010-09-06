@@ -136,6 +136,6 @@ sub __get_sql {
       $str .= $class->get_where($self->{'__where'});
    }
    
-   return $str;
+   return $self->SUPER::__get_sql($class, $str);
 }
 1;

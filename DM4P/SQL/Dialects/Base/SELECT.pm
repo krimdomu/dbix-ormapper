@@ -46,8 +46,9 @@ sub get_fields {
          $str .= ", ";
       }
       
-      $str .= $self->parse_names($key);
-      $str .= $self->parse_AS_names($val);
+      $str .= $key;
+      $val =~ s/#//g;
+      $str .= ' AS #' . $val;
    }
 
    return $str;

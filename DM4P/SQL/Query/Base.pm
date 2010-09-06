@@ -74,4 +74,28 @@ sub has_bind {
    return $self->{'__has_bind'};
 }
 
+# ------------------------------------------------------------------------------
+# Group: Private
+# ------------------------------------------------------------------------------
+
+# Function: __get_sql
+#
+#   Create the INSERT SQL Statement.
+#
+# Parameters:
+#
+#   Dialect-Class
+#   SQL String
+#
+# Returns:
+#
+#   String
+sub __get_sql {
+   my $self = shift;
+   my $class = shift;
+   my $str = shift;
+   
+   return $class->parse_names($str);
+}
+
 1;

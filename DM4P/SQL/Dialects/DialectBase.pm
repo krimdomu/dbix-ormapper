@@ -33,14 +33,5 @@ sub parse_names {
    return $str;
 }
 
-sub parse_AS_names {
-   my $self = shift;
-   my $str = shift;
-   
-   $str = $self->parse_names($str);
-   
-   return ' AS ' . $str;
-}
-
 
 1;

@@ -121,6 +121,6 @@ sub __get_sql {
    $str .= $q;
    $str .= ")";
    
-   return $str;
+   return $self->SUPER::__get_sql($class, $str);
 }
 1;

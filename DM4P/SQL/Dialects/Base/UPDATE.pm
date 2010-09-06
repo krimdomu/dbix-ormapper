@@ -59,7 +59,7 @@ sub get_table {
    
    my $t = shift;
    
-   return $self->{'separator'} . $t . $self->{'separator'};
+   return "#". $t;
 }
 
 # Function: get_update_string
@@ -74,7 +74,7 @@ sub get_update_fields {
       if($str ne "") {
          $str .= ", ";
       }
-      $str .= $self->{'separator'} . $k->{'name'} . $self->{'separator'} . '=?';
+      $str .= "#" . $k->{'name'} . '=?';
    }
    
    return $str;
