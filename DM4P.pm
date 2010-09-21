@@ -54,8 +54,8 @@ sub create_connection {
    }
    
    my $type = $conn_map->{$db}->{'name'};
-   require "DM4P/SQL/Dialects/$type.pm";
-   require "DM4P/Connection/Server/$type.pm";
+#   require "DM4P/SQL/Dialects/$type.pm";
+#   require "DM4P/Connection/Server/$type.pm";
    
    my $class_name = "DM4P::Connection::Server::$type";
    return $class_name->new(uri => $conn_str);
