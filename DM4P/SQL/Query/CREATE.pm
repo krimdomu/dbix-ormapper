@@ -109,6 +109,10 @@ sub __get_sql {
    }
    
    $str .= $fields;
+   if(defined $self->{'__primary_key'} && $self->{'__primary_key'}) {
+      $str .= ", " . $class->get_primary_key($self->{'__primary_key'});
+   }
+   
    $str .= ")";
    
    return $self->SUPER::__get_sql($class, $str);

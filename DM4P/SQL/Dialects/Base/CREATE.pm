@@ -56,4 +56,18 @@ sub get_field_type {
    # todo: throw MustOverride
 }
 
+# Function: get_primary_key
+#
+#    Get Primary Key.
+#
+# Returns:
+#
+#   String.
+sub get_primary_key {
+   my $self = shift;
+   my $pri_key = shift;
+   
+   return 'PRIMARY KEY(' . $pri_key . ')';
+}
+
 1;
