@@ -113,20 +113,6 @@ sub password {
    return $self->__get_from_uri('password');
 }
 
-# Function: type
-#
-#    Returns the Database-Type.
-#
-# Returns:
-#
-#   String - Database-Type.
-sub type {
-   my $self = shift;
-   my $u = URI->new($self->uri);
-   
-   return $DM4P::conn_map->{$u->scheme}->{'dbiclass'};
-}
-
 # Function: dsn
 #
 #   Returns the DBI compatible DSN String.
