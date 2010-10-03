@@ -46,4 +46,37 @@ sub get_all {
    return @arr;
 }
 
+# Function: next
+#
+#   Returns the next row.
+#
+# Returns:
+#
+#   HashRef
+sub next {
+   my $self = shift;
+   
+   return DM4P::SQL::Result->new($self->{'sth'}->fetchrow_hashref());
+}
+
+# Function: each
+#
+#   Execute the given BLOCK on each Result.
+#
+# Returns:
+#
+#   Number of runs.
+sub each(&) {
+   my $self = shift;
+   my $code = shift;
+   
+   my $counter = 0;
+   
+   while (my $ref = $self->{'sth'}->fetchrow_hashref()) {
+      &$code(DM4P::SQL::Result->new($ref));
+   }
+   
+   return $counter;
+}
+
 1;
