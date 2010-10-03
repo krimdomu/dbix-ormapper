@@ -151,8 +151,10 @@ sub __get_sql {
       }
    }
    
-   $str .= " WHERE ";
-   $str .= $class->get_where($self->{'__where'});
+   if($self->{'__where'}) {
+      $str .= " WHERE ";
+      $str .= $class->get_where($self->{'__where'});
+   }
    
    return $self->SUPER::__get_sql($class, $str);
 }
