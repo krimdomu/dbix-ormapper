@@ -12,6 +12,7 @@ use DM4P::SQL::Query::INSERT;
 use DM4P::SQL::Query::DELETE;
 use DM4P::SQL::Query::UPDATE;
 use DM4P::SQL::Query::CREATE;
+use DM4P::SQL::Query::SQL;
 
 use DM4P::SQL::Dialects::DialectBase;
 
