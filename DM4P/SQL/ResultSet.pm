@@ -63,6 +63,10 @@ sub next {
 #
 #   Execute the given BLOCK on each Result.
 #
+# Parameters:
+#
+#   FunctionRef - Function Reference.
+#
 # Returns:
 #
 #   Number of runs.
