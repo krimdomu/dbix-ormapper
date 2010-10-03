@@ -73,7 +73,8 @@ sub each(&) {
    my $counter = 0;
    
    while (my $ref = $self->{'sth'}->fetchrow_hashref()) {
-      &$code(DM4P::SQL::Result->new($ref));
+      &$code(DM4P::SQL::Result->new($ref), $counter);
+      $counter++;
    }
    
    return $counter;
