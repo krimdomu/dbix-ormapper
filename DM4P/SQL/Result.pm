@@ -21,6 +21,8 @@ sub new {
    my $proto = ref($that) || $that;
    my $self = shift;
    
+   if(!$self) { return undef; }
+   
    bless($self, $proto);
    return $self;
 }
