@@ -67,6 +67,10 @@ sub fields {
 #
 #   Set the primary key.
 #
+# Parameters:
+#
+#   String - Key
+#
 # Returns:
 #
 #   $self
@@ -81,7 +85,6 @@ sub primary_key {
 # ------------------------------------------------------------------------------
 # Group: Private
 # ------------------------------------------------------------------------------
-
 
 # Function: __get_sql
 #

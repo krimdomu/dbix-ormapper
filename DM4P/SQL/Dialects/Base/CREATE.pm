@@ -70,4 +70,5 @@ sub get_primary_key {
    return 'PRIMARY KEY(' . $pri_key . ')';
 }
 
+
 1;
