@@ -43,6 +43,45 @@ sub get_table {
    return "#$t";
 }
 
+# Function: get_index
+#
+#   Returns the indx.
+#
+# Parameters:
+#
+#   String - Name of the index.
+#
+# Returns:
+#
+#   String
+sub get_index {
+   my $self = shift;
+   my $idx = shift;
+   
+   return '#'.$idx;
+}
+
+# Function: get_index_column
+#
+#   Returns the index columns
+#
+# Parameters:
+#
+#   ArrayRef - Columns
+#
+# Returns:
+#
+#   String
+sub get_index_column {
+   my $self = shift;
+   my $col = shift;
+   
+   my @cols = @{$col};
+   map { $_ = "#$_" } @cols;
+   
+   return join(', ', @cols);
+}
+
 # Function: get_field_type
 #
 #    Get Field Type.
@@ -69,6 +108,5 @@ sub get_primary_key {
    
    return 'PRIMARY KEY(' . $pri_key . ')';
 }
-
 
 1;

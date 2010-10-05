@@ -43,25 +43,6 @@ sub get_table {
    return "#$t";
 }
 
-# Function: get_action
-#
-#   Returns the ALTER action.
-#
-# Parameters:
-#
-#   String - Action.
-#
-# Returns:
-#
-#   String
-sub get_action {
-   my $self = shift;
-   
-   my $action = shift;
-   
-   return $action;
-}
-
 # Function: get_foreign_key
 #
 #   Returns the foreign key string.

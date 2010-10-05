@@ -14,5 +14,23 @@ sub new {
    return $self;
 }
 
+# Function: get_action
+#
+#   Returns the ALTER action.
+#
+# Parameters:
+#
+#   String - Action.
+#
+# Returns:
+#
+#   String
+sub get_action {
+   my $self = shift;
+   
+   my $action = shift;
+   
+   return $action;
+}
 
 1;
