@@ -109,7 +109,7 @@ sub on {
 sub fields {
    my $self = shift;
    
-   $self->{'__fieldset'} = DM4P::SQL::Query::FieldSet->new(__create_query => $self);
+   $self->{'__fieldset'} = DM4P::SQL::Query::FieldSet->new(__query => $self);
    return $self->{'__fieldset'};
 }
 

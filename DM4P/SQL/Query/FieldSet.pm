@@ -31,7 +31,7 @@ sub new {
 
 sub end {
    my $self = shift;
-   return $self->__get_create_query();
+   return $self->__get_query();
 }
 
 # Function: get_fields
@@ -50,7 +50,7 @@ sub get_fields {
 # Group: Private
 # ------------------------------------------------------------------------------
 
-# Function: __get_create_query
+# Function: __get_query
 #
 #   Returns the create query object.
 #   For internal use only.
@@ -58,9 +58,9 @@ sub get_fields {
 # Returns:
 #
 #    DM4P::SQL::Query::CREATE
-sub __get_create_query {
+sub __get_query {
    my $self = shift;
-   return $self->{'__create_query'};
+   return $self->{'__query'};
 }
 
 # ------------------------------------------------------------------------------

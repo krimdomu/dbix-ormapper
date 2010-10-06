@@ -24,6 +24,7 @@ sub new {
    $self->{'__table'} = "";
    $self->{'__foreign_keys'} = [];
    $self->{'__action'} = 'ADD'; # default action is add
+   $self->{'__column'} = 0;
    
    return $self;
 }
@@ -89,6 +90,21 @@ sub add {
    return $self;
 }
 
+# Function: column
+#
+#   Add a column to the table.
+#
+# Returns:
+#
+#   DM4P::SQL::Query::FieldSet
+sub column {
+   my $self = shift;
+   
+   $self->{'__column'} = 1;
+   $self->{'__fieldset'} = DM4P::SQL::Query::FieldSet->new(__query => $self);
+   return $self->{'__fieldset'};
+}
+
 # ------------------------------------------------------------------------------
 # Group: Private
 # ------------------------------------------------------------------------------
@@ -112,6 +128,19 @@ sub __get_sql {
    $str .= $class->get_action($self->{'__action'});
    $str .= ' ';
    
+   if($self->{'__column'} == 1) {
+      my $fields = "";
+      $str .= ' COLUMN ';
+      for my $field (@{$self->{'__fieldset'}->get_fields()}) {
+         if($fields ne "") { $fields .= ", "; }
+         my $field_name = '#' . $field->{'name'};
+         my $field_type = $class->get_field_type($field->{'type'}, $field->{'args'});
+         $fields .= $field_name . ' ' . $field_type;
+      }
+      
+      $str .= $fields;
+   }
+      
    if(scalar(@{$self->{'__foreign_keys'}}) > 0) {
       for my $key (@{$self->{'__foreign_keys'}}) {
          $str .= ' ';
