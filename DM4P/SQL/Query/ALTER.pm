@@ -90,6 +90,22 @@ sub add {
    return $self;
 }
 
+# Function: drop
+#
+#   DROP Alter Action.
+#
+# Returns:
+#
+#   $self
+sub drop {
+   my $self = shift;
+   
+   $self->{'__action'} = 'DROP';
+   
+   return $self;
+}
+
+
 # Function: column
 #
 #   Add a column to the table.
@@ -135,7 +151,7 @@ sub __get_sql {
          if($fields ne "") { $fields .= ", "; }
          my $field_name = '#' . $field->{'name'};
          my $field_type = $class->get_field_type($field->{'type'}, $field->{'args'});
-         $fields .= $field_name . ' ' . $field_type;
+         $fields .= $field_name . ' ' . ($field_type || '');
       }
       
       $str .= $fields;
