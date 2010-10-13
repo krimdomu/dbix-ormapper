@@ -70,7 +70,7 @@ sub db {
    my $u = URI->new($self->uri);
    
    my $db = $u->path;
-   $db =~ s/\///gms;
+   $db =~ s/^\///;
    
    return $db;
 }
@@ -172,6 +172,7 @@ sub __get_from_uri {
    my $what = shift;
    
    my $qry = [ split(/\?/, $self->uri) ]->[1];
+   if(!$qry) { return undef; }
    
    for my $t (split(/[&;]/, $qry)) {
       my($key, $val) = split(/=/, $t);
