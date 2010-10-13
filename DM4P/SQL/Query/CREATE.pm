@@ -150,7 +150,7 @@ sub __get_sql {
    
    my $class = $self->get_class("CREATE");
 
-   my $str = "CREATE " . $class->get_action($self->{'__action'});
+   my $str = "CREATE " . $class->get_action($self->{'__action'} . " ");
 
    if($self->{'__action'} eq "TABLE") {
       $str .= $class->get_table($self->{'__table'});
