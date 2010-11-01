@@ -36,6 +36,8 @@ sub new {
 	@{$self->{'__parts'}} = [ @_ ];
 	$self->{'__bind_params'} = [];
 
+	$self->{'__query_done'} = 0;
+
 	return $self;
 }
 
