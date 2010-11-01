@@ -6,7 +6,6 @@ use warnings;
 use Data::Dumper;
 
 use overload
-	#'+' => sub  { $_[0]->or(@_); },
 	'+' => sub  { $_[0]->or(@_); },
 	'-' => sub  { $_[0]->and(@_, 1); },
 	'&' => sub  { $_[0]->and(@_); },
