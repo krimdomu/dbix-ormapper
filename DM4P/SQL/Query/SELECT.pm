@@ -51,6 +51,13 @@ sub field {
    return $self;
 }
 
+sub fields {
+	my $self = shift;
+
+	for my $field (@_) {
+		$self->field(@{$field});
+	}
+}
 
 # Function: from
 #
