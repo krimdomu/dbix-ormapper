@@ -26,4 +26,26 @@ sub new {
 	return $self;
 }
 
+sub get_select {
+	my $self = shift;
+	my $qry = shift;
+
+	return DM4P::SQL::Query::SELECT->new()
+		->from($self->table)
+		->where($qry);
+}
+
+sub table {
+	my ($class, $name) = @_;
+	no strict 'refs';
+
+	if($name) {
+		my $var = $class."::db_table";
+		$$var = $name;
+	} else {
+		my $var = $class."::db_table";
+		return $$var;
+	}
+}
+
 1;

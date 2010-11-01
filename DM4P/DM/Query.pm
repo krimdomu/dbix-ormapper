@@ -86,6 +86,9 @@ sub next {
 	my $self = shift;
 
 	if($self->{'__query_done'} == 0) {
+		my $select = $self->ds->get_select($self->to_s);
+		$select->fields($self->ds->get_fields());
+		print Dumper($select);
 	} else {
 	}
 }

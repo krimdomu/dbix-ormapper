@@ -10,6 +10,8 @@ use Data::Dumper;
 # Group: Constructor
 # ------------------------------------------------------------------------------
 
+use vars qw(@db_fields);
+
 # Function: new
 #
 #   Creates an new DM4P::DM::DataSource Object.
@@ -62,6 +64,9 @@ sub attr {
 
 		$ret_o;
 	};
+
+	my $arr = $class . "::tbl_fields";
+	push(@$arr, [$attr]);
 }
 
 # ------------------------------------------------------------------------------
@@ -98,5 +103,21 @@ sub model {
 	return $model;
 }
 
+sub get_select {
+	my $self = shift;
+
+	if(ref($self) eq "DM4P::DM::DataSource") {
+		# todo: throw exception, must be overwritten
+		die("must be overwritten");
+	}
+}
+
+sub get_fields {
+	my $self = shift;
+	my $arr = $self . "::tbl_fields";
+
+	no strict 'refs';
+	return @$arr;
+}
 
 1;
