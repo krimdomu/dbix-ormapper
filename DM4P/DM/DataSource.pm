@@ -3,7 +3,6 @@ package DM4P::DM::DataSource;
 use strict;
 use warnings;
 
-use Want;
 use Data::Dumper;
 
 # ------------------------------------------------------------------------------
@@ -22,9 +21,11 @@ use vars qw(@db_fields);
 sub new {
 	my $that = shift;
 	my $proto = ref($that) || $that;
-	my $self = { @_ };
+	my $self = {};
 
 	bless($self, $proto);
+
+	$self->{'__data'} = { @_ };
 
 	return $self;
 }
@@ -52,11 +53,7 @@ sub attr {
 		my $ret_o;
 		if(ref($self)) {
 			# ein data object zurueckgeben
-			$ret_o = $self->get_data_object();
-			if(want(qw'LVALUE ASSIGN')) {
-				# wenn als lvalue verwendet, dann die referenz auf data zurueckgeben
-				$ret_o = $ret_o->data;
-			}
+			$ret_o = $self->get_data($attr);
 		} else {
 			# ein vergleichsobjekt zurueckgeben
 			$ret_o = DM4P::DM::Comparable->new(ds => $class, model => $class, key => $attr);
@@ -120,11 +117,18 @@ sub get_select {
 }
 
 sub get_fields {
-	my $self = shift;
-	my $arr = $self . "::tbl_fields";
+	my $class = shift;
+	my $arr = $class . "::tbl_fields";
 
 	no strict 'refs';
 	return @$arr;
+}
+
+sub get_data {
+	my $self = shift;
+	my $key = shift;
+
+	$self->{'__data'}->{$key};
 }
 
 1;

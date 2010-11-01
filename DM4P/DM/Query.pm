@@ -92,7 +92,8 @@ sub next {
 
 		my $i=0;
 		for my $bp (@{$self->{'__bind_params'}}) {
-			$self->{'__stm'}->bind(++$i, $bp);
+			$i++;
+			$self->{'__stm'}->bind($i, $bp);
 		}
 
 		$self->{'__stm'}->execute();
@@ -100,7 +101,11 @@ sub next {
 		$self->{'__query_done'} = 1;
 	}
 
-	return $self->{'__stm'}->fetchrow_hashref();
+	if(my $row = $self->{'__stm'}->fetchrow_hashref()) {
+		return $self->ds->new(%{$row});
+	}
+
+	return undef;
 }
 
 sub model {
