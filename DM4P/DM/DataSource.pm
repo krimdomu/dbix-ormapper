@@ -57,7 +57,7 @@ sub attr {
 			}
 		} else {
 			# ein vergleichsobjekt zurueckgeben
-			$ret_o = DM4P::DM::Comparable->new(model => $class, key => $attr);
+			$ret_o = DM4P::DM::Comparable->new(ds => $class, model => $class, key => $attr);
 		}
 
 		$ret_o;

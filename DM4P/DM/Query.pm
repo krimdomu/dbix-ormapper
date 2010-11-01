@@ -30,8 +30,10 @@ sub new {
 
 	bless($self, $proto);
 
-	$self->{$_[0]} = $_[1];
-	shift; shift;
+	for my $d (0..1) {
+		$self->{$_[0]} = $_[1];
+		shift; shift;
+	}
 
 	@{$self->{'__parts'}} = [ @_ ];
 	$self->{'__bind_params'} = [];
@@ -50,7 +52,7 @@ sub new {
 #    Overload + and |
 sub or {
 	my $self = shift;
-	return DM4P::DM::Query->new(model => $self->model, $_[0], 'OR', $_[1]);
+	return DM4P::DM::Query->new(ds => $self->ds, model => $self->model, $_[0], 'OR', $_[1]);
 }
 
 # Function: and
@@ -58,7 +60,7 @@ sub or {
 #    Overload - and &
 sub and {
 	my $self = shift;
-	return DM4P::DM::Query->new(model => $self->model, $_[0], 'AND', $_[1]);
+	return DM4P::DM::Query->new(ds => $self->ds, model => $self->model, $_[0], 'AND', $_[1]);
 }
 
 # Function: to_s
@@ -82,11 +84,20 @@ sub to_s {
 #    DM4P::DM::DataSource
 sub next {
 	my $self = shift;
+
+	if($self->{'__query_done'} == 0) {
+	} else {
+	}
 }
 
 sub model {
 	my $self = shift;
 	return $self->{'model'};
+}
+
+sub ds {
+	my $self = shift;
+	return $self->{'ds'};
 }
 
 # ------------------------------------------------------------------------------

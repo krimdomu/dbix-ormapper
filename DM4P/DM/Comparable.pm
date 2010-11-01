@@ -54,7 +54,12 @@ sub overload_compare {
 		$val = $r;
 	}
 
-	return DM4P::DM::Query::Part->new(model => $self->model, key => $key, val => $val, type => '', operator => $op);
+	return DM4P::DM::Query::Part->new(ds => $self->ds, 
+						model => $self->model, 
+						key => $key, 
+						val => $val, 
+						type => '', 
+						operator => $op);
 }
 
 # ------------------------------------------------------------------------------
@@ -69,6 +74,11 @@ sub key {
 sub model {
 	my $self = shift;
 	return $self->{'model'};
+}
+
+sub ds {
+	my $self = shift;
+	return $self->{'ds'};
 }
 
 1;

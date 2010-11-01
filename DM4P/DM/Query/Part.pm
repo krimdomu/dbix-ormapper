@@ -47,14 +47,14 @@ sub or {
 	my $self = shift;
 	$_[0]->type = '';
 	$_[1]->type = 'OR';
-	return DM4P::DM::Query->new(model => $self->model, @_);
+	return DM4P::DM::Query->new(ds => $self->ds, model => $self->model, @_);
 }
 
 sub and {
 	my $self = shift;
 	$_[0]->type = '';
 	$_[1]->type = 'AND';
-	return DM4P::DM::Query->new(model => $self->model, @_);
+	return DM4P::DM::Query->new(ds => $self->ds, model => $self->model, @_);
 }
 
 # ------------------------------------------------------------------------------
@@ -82,7 +82,11 @@ sub type : lvalue {
 
 sub model {
 	my $self = shift;
-	$self->{'model'};
+	return $self->{'model'};
 }
 
+sub ds {
+	my $self = shift;
+	return $self->{'ds'};
+}
 1;
