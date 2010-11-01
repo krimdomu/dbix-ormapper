@@ -86,7 +86,7 @@ sub attr {
 #    DM4P::DM::Query
 sub all {
 	my $self = shift;
-	return DM4P::DM::Query->new(model => $self->model, @_);
+	return DM4P::DM::Query->new(ds => $self, model => $self->model, @_);
 }
 
 # Function: model
@@ -98,7 +98,14 @@ sub all {
 #    String - Modelname
 sub model {
 	my $self = shift;
-	my ($model) = ref($self) =~ m/^.*::(.*?)$/;
+	my $model;
+	if(ref($model)) {
+		($model) = ref($self) =~ m/^.*::(.*?)$/;
+	} else {
+		no strict 'refs';
+		my $var = $self . "::db_table";
+		$model = $$var;
+	}
 
 	return $model;
 }

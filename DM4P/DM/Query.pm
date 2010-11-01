@@ -88,9 +88,19 @@ sub next {
 	if($self->{'__query_done'} == 0) {
 		my $select = $self->ds->get_select($self->to_s);
 		$select->fields($self->ds->get_fields());
-		print Dumper($select);
-	} else {
+		$self->{'__stm'} = $self->db->get_statement($select);
+
+		my $i=0;
+		for my $bp (@{$self->{'__bind_params'}}) {
+			$self->{'__stm'}->bind(++$i, $bp);
+		}
+
+		$self->{'__stm'}->execute();
+
+		$self->{'__query_done'} = 1;
 	}
+
+	return $self->{'__stm'}->fetchrow_hashref();
 }
 
 sub model {
@@ -103,6 +113,11 @@ sub ds {
 	return $self->{'ds'};
 }
 
+sub db {
+	my $self = shift;
+	return DM4P::get_connection();
+}
+
 # ------------------------------------------------------------------------------
 # Group: Protected
 # ------------------------------------------------------------------------------
@@ -110,6 +125,8 @@ sub ds {
 sub _get_parts_sql_where {
 	my $self = shift;
 	my @where = ();
+
+	@{$self->{'__bind_params'}} = ();
 
 	for my $part (@{$self->{'__parts'}}) {
 		for my $subpart (@{$part}) {
