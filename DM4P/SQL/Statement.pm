@@ -54,8 +54,7 @@ sub db {
 #   HashRef - Attributes.
 sub bind {
    my $self = shift;
-   
-   push(@{$self->{'__binds'}}, \@_);
+   push(@{$self->{'__binds'}}, [ @_ ]);
 }
 
 # Function: query
@@ -89,7 +88,7 @@ sub query {
 #    DM4P::SQL::ResultSet
 sub execute {
    my $self = shift;
-   
+
    $self->{'sth'} = $self->db->get_connection->prepare($self->query->to_s);
    if($self->query->has_bind) {
       if(scalar(@{$self->{'__binds'}}) > 0) {
@@ -113,7 +112,7 @@ sub execute {
    }
    
    $self->{'sth'}->execute() or DM4P::Exception::SQL->throw(error => $self->{'sth'}->errstr); 
-   
+
    return DM4P::SQL::ResultSet->new(sth => $self);
 }
 
