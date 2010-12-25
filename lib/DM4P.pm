@@ -6,6 +6,8 @@ use warnings;
 use DM4P::Connection::Base;
 use DM4P::Exception::Connect;
 
+our $VERSION='0.1';
+
 use vars qw(%connections);
 
 # Function: setup
