@@ -40,7 +40,7 @@ sub new {
 # ------------------------------------------------------------------------------
 sub to_s {
 	my $self = shift;
-	return $self->type . " #" . $self->key . " " . $self->operator . " ?";
+	return $self->type . " " . "#" . $self->model->table . ".#" . $self->key . " " . $self->operator . " ?";
 }
 
 sub or {
