@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Data::Dumper;
+use Want;
 
 # ------------------------------------------------------------------------------
 # Group: Constructor
@@ -51,15 +52,19 @@ sub attr {
 	*{"${class}::$attr"} = sub : lvalue {
 		my ($self, @params) = @_;
 		my $ret_o;
-		if(ref($self)) {
-			# ein data object zurueckgeben
-			$ret_o = $self->get_data($attr);
-		} else {
-			# ein vergleichsobjekt zurueckgeben
-			$ret_o = DM4P::DM::Comparable->new(ds => $class, model => $class, key => $attr);
-		}
+      if(want(qw{LVALUE ASSIGN})) {
+         $self->{'__data'}->{$attr};
+      } else {
+         if(ref($self)) {
+            # ein data object zurueckgeben
+            $ret_o = $self->get_data($attr);
+         } else {
+            # ein vergleichsobjekt zurueckgeben
+            $ret_o = DM4P::DM::Comparable->new(ds => $class, model => $class, key => $attr);
+         }
 
-		$ret_o;
+         $ret_o;
+      }
 	};
 
 	my $arr = $class . "::tbl_fields";

@@ -52,6 +52,19 @@ sub table {
 # Group: Relations
 # ------------------------------------------------------------------------------
 
+sub primary_key {
+   my ($class, $name) = @_;
+	no strict 'refs';
+
+	if($name) {
+		my $var = (ref($class) || $class ) ."::primary_key";
+		$$var = $name;
+	} else {
+		my $var = (ref($class) || $class) ."::primary_key";
+		return $$var;
+	}
+}
+
 sub has_n {
    my ($class, $name, $join_pkg, $opts) = @_;
 }
@@ -73,12 +86,32 @@ sub save {
 
    my $insert = DM4P::SQL::Query::INSERT->new()
                                        ->table($self->table);
+   $self->_do_query($insert);
+}
+
+sub update {
+   my ($self) = @_;
+
+   my $update = DM4P::SQL::Query::UPDATE->new()
+                                       ->table($self->table);
+   $update->where('#' . $self->table . '.#' . $self->primary_key . ' = ?');
+
+   $self->_do_query($update, 1);
+}
+
+sub _do_query {
+   my ($self, $query, $do_update) = @_;
+
    for my $key (keys %{$self->{'__data'}}) {
-      $insert->$key($self->{'__data'}->{$key});
+      $query->$key($self->{'__data'}->{$key});
    }
 
    my $db = DM4P::get_connection();
-   my $stm = $db->get_statement($insert);
+   my $stm = $db->get_statement($query);
+
+   if($do_update) {
+      $stm->bind(1, $self->{'__data'}->{$self->primary_key});
+   }
 
    $stm->execute;
 }
