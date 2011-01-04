@@ -40,12 +40,47 @@ sub table {
 	no strict 'refs';
 
 	if($name) {
-		my $var = $class."::db_table";
+		my $var = (ref($class) || $class ) ."::db_table";
 		$$var = $name;
 	} else {
-		my $var = $class."::db_table";
+		my $var = (ref($class) || $class) ."::db_table";
 		return $$var;
 	}
+}
+
+# ------------------------------------------------------------------------------
+# Group: Relations
+# ------------------------------------------------------------------------------
+
+sub has_n {
+   my ($class, $name, $join_pkg, $opts) = @_;
+}
+
+sub has {
+   my ($class, $name, $join_pkg, $opts) = @_;
+}
+
+sub belongs_to {
+   my ($class, $name, $join_pkg, $opts) = @_;
+}
+
+# ------------------------------------------------------------------------------
+# Group: Datamanipulation
+# ------------------------------------------------------------------------------
+
+sub save {
+   my ($self) = @_;
+
+   my $insert = DM4P::SQL::Query::INSERT->new()
+                                       ->table($self->table);
+   for my $key (keys %{$self->{'__data'}}) {
+      $insert->$key($self->{'__data'}->{$key});
+   }
+
+   my $db = DM4P::get_connection();
+   my $stm = $db->get_statement($insert);
+
+   $stm->execute;
 }
 
 1;
