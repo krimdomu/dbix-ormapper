@@ -15,11 +15,11 @@ __PACKAGE__->attr('user_id', 'Int');
 __PACKAGE__->table('notes');
 __PACKAGE__->primary_key('id');
 
-__PACKAGE__->belongs_to('User' => 'User', { auto_join => 1 });
+__PACKAGE__->belongs_to('User' => 'User', 'user_id', { auto_join => 1 });
 
 sub blub {
    my ($self) = @_;
-   return "die id: (" . $self->id . ")";
+   $self->id;
 }
 
 1;
@@ -39,7 +39,7 @@ __PACKAGE__->attr('email', 'String');
 __PACKAGE__->table('users');
 __PACKAGE__->primary_key('id');
 
-__PACKAGE__->has_n('Notes' => 'Note', { auto_join => 1 });
+__PACKAGE__->has_n('Notes' => 'Note', 'user_id', { auto_join => 1 });
 
 1;
 
@@ -64,14 +64,19 @@ if($e = Exception::Class->caught('DM4P::Exception::Connect')) {
 	die("Error connecting to mysql server.");
 }
 
-my $q = Note->all( (Note->id == 0) | (Note->id < 2) );
+#my $q = Note->all( (Note->id == 0) | (Note->id < 2) );
+my $q = User->all( User->id == 1 );
 
 print $q . "\n";
 
 while(my $res1 = $q->next()) {
 	print "Id: " . $res1->id . "\n";
-	print "Title: " . $res1->title . "\n";
-   print $res1->blub . "\n";
+	print "Username: " . $res1->name . "\n";
+   my $all_notes = $res1->Notes;
+   print "all_notes: $all_notes\n";
+   while(my $notes = $all_notes->next) {
+      print "Id: " . $notes->id . "\n";
+   }
 }
 
 print "End\n";
@@ -81,9 +86,9 @@ print "End\n";
 #                     title => 'New Title 2',
 #                     user_id => 1
 #                  );
-my $new_note = Note->all( Note->id == 5 )->next;
-$new_note->title = "Updated title";
-$new_note->update;
+#my $new_note = Note->all( Note->id == 5 )->next;
+#$new_note->title = "Updated title";
+#$new_note->update;
 
 #$new_note->save;
 
