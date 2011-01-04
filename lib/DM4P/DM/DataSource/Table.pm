@@ -66,15 +66,37 @@ sub primary_key {
 }
 
 sub has_n {
-   my ($class, $name, $join_pkg, $opts) = @_;
+   my ($class, $name, $join_pkg, $join_col, $opts) = @_;
+
+   no strict 'refs';
+
+   *{"${class}::$name"} = sub {
+      my $self = shift;
+
+      my $join_pkey = $join_pkg->primary_key;
+      my $my_pkey   = $self->primary_key;
+      return $join_pkg->all( $join_pkg->$join_col == $self->$my_pkey );
+   };
 }
 
 sub has {
-   my ($class, $name, $join_pkg, $opts) = @_;
+   my ($class) = shift;
+
+   $class->has_n(@_);
 }
 
 sub belongs_to {
-   my ($class, $name, $join_pkg, $opts) = @_;
+   my ($class, $name, $join_pkg, $join_col, $opts) = @_;
+
+   no strict 'refs';
+
+   *{"${class}::$name"} = sub {
+      my $self = shift;
+
+      my $join_pkey = $join_pkg->primary_key;
+      my $my_pkey   = $self->primary_key;
+      return $join_pkg->all( $join_pkg->$join_pkey == $self->$join_col );
+   };
 }
 
 # ------------------------------------------------------------------------------
