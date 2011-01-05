@@ -1,7 +1,8 @@
 use lib '../../../dm4p/lib';
 use lib '../../../dm4p-adapter-mysql/lib';
+use lib '../../../dm4p-adapter-pgsql/lib';
 
-package Note;
+package DB::Note;
 
 use strict;
 use warnings;
@@ -39,7 +40,7 @@ __PACKAGE__->attr('email', 'String');
 __PACKAGE__->table('users');
 __PACKAGE__->primary_key('id');
 
-__PACKAGE__->has_n('Notes' => 'Note', 'user_id', { auto_join => 1 });
+__PACKAGE__->has_n('Notes' => 'DB::Note', 'user_id', { auto_join => 1 });
 
 1;
 
@@ -50,13 +51,18 @@ use Data::Dumper;
 use DM4P;
 use DM4P::DM;
 use DM4P::Adapter::MySQL;
+use DM4P::Adapter::PgSQL;
 use Exception::Class;
 
-DM4P::setup(default => 'MySQL://localhost/' . $ARGV[0] . '?username=' . $ARGV[1] . '&password=' . $ARGV[2]);
+DM4P::setup(notes => 'MySQL://localhost/' . $ARGV[0] . '?username=' . $ARGV[1] . '&password=' . $ARGV[2]);
+DM4P::setup(users => 'Pg://debian01/' . $ARGV[3] . '?username=' . $ARGV[4] . '&password=' . $ARGV[5]);
 
-my $db = DM4P::get_connection();
+my $db_notes = DM4P::get_connection('notes');
+my $db_users = DM4P::get_connection('users');
+
 eval {
-	$db->connect();
+	$db_notes->connect();
+   $db_users->connect();
 };
 
 my $e;
@@ -64,8 +70,11 @@ if($e = Exception::Class->caught('DM4P::Exception::Connect')) {
 	die("Error connecting to mysql server.");
 }
 
+DB::Note->set_data_source($db_notes);
+User->set_data_source($db_users);
+
 #my $q = Note->all( (Note->id == 0) | (Note->id < 2) );
-my $q = User->all( User->id == 1 );
+my $q = User->all( User->id == 2 );
 
 print $q . "\n";
 
@@ -75,7 +84,7 @@ while(my $res1 = $q->next()) {
    my $all_notes = $res1->Notes;
    print "all_notes: $all_notes\n";
    while(my $notes = $all_notes->next) {
-      print "Id: " . $notes->id . "\n";
+      print "title: " . $notes->title . "\n";
    }
 }
 
