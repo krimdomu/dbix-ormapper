@@ -120,7 +120,8 @@ sub ds {
 
 sub db {
 	my $self = shift;
-	return DM4P::get_connection();
+	#return DM4P::get_connection();
+	return $self->ds->get_data_source;
 }
 
 # ------------------------------------------------------------------------------

@@ -128,7 +128,7 @@ sub _do_query {
       $query->$key($self->{'__data'}->{$key});
    }
 
-   my $db = DM4P::get_connection();
+   my $db = $self->get_data_source;
    my $stm = $db->get_statement($query);
 
    if($do_update) {

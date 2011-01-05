@@ -136,4 +136,21 @@ sub get_data {
 	$self->{'__data'}->{$key};
 }
 
+sub set_data_source {
+   my $class = shift;
+
+   no strict 'refs';
+   my $var = "${class}::data_source";
+   $$var = shift;
+}
+
+sub get_data_source {
+   my $class = shift;
+   if(ref($class)) { $class = ref($class); }
+
+   no strict 'refs';
+   my $var = "${class}::data_source";
+   $$var;
+}
+
 1;
