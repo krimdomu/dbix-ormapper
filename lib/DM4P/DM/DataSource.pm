@@ -133,6 +133,10 @@ sub get_data {
 	my $self = shift;
 	my $key = shift;
 
+   unless($key) {
+      return $self->{'__data'};
+   }
+
 	$self->{'__data'}->{$key};
 }
 
