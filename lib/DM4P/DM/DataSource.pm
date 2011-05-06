@@ -146,6 +146,7 @@ sub set_data_source {
    no strict 'refs';
    my $var = "${class}::data_source";
    $$var = shift;
+   my $tmp = $$var; # suppress warnings
 }
 
 sub get_data_source {
