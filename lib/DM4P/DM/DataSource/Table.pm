@@ -42,6 +42,7 @@ sub table {
 	if($name) {
 		my $var = (ref($class) || $class ) ."::db_table";
 		$$var = $name;
+      my $tmp = $$var; # suppress warning
 	} else {
 		my $var = (ref($class) || $class) ."::db_table";
 		return $$var;
