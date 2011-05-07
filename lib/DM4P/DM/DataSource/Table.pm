@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use base qw(DM4P::DM::DataSource);
+use Data::Dumper;
 
 # ------------------------------------------------------------------------------
 # Group: Constructor
@@ -29,10 +30,27 @@ sub new {
 sub get_select {
 	my $self = shift;
 	my $qry = shift;
+   my $opt = { @_ };
 
-	return DM4P::SQL::Query::SELECT->new()
+	my $select = DM4P::SQL::Query::SELECT->new()
 		->from($self->table)
 		->where($qry);
+
+   if($opt->{"order_by"}) {
+      $select = $select->order($opt->{"order_by"});
+
+      if($opt->{"order_direction"} && $opt->{"order_direction"} eq "asc") {
+         $select = $select->asc();
+      }
+      elsif($opt->{"order_direction"} && $opt->{"order_direction"} eq "desc") {
+         $select = $select->desc();
+      }
+      else {
+         $select = $select->asc();
+      }
+   }
+
+   return $select;
 }
 
 sub table {
@@ -138,5 +156,6 @@ sub _do_query {
 
    $stm->execute;
 }
+
 
 1;

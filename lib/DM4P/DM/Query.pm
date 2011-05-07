@@ -35,10 +35,11 @@ sub new {
 		shift; shift;
 	}
 
-	@{$self->{'__parts'}} = [ @_ ];
-	$self->{'__bind_params'} = [];
+	@{$self->{"__parts"}} = [ @_ ];
+	$self->{"__bind_params"} = [];
 
-	$self->{'__query_done'} = 0;
+	$self->{"__query_done"} = 0;
+   $self->{"__query_options"} = {};
 
 	return $self;
 }
@@ -86,7 +87,7 @@ sub next {
 	my $self = shift;
 
 	if($self->{'__query_done'} == 0) {
-		my $select = $self->ds->get_select($self->to_s);
+		my $select = $self->ds->get_select($self->to_s, %{ $self->{"__query_options"} });
 		$select->fields($self->ds->get_fields());
 		$self->{'__stm'} = $self->db->get_statement($select);
 
@@ -123,6 +124,56 @@ sub db {
 	#return DM4P::get_connection();
 	return $self->ds->get_data_source;
 }
+
+# ------------------------------------------------------------------------------
+# Group: Query Modification
+# ------------------------------------------------------------------------------
+
+# 
+# Function: order
+#
+#    Set the order of the query.
+#
+# Returns:
+#
+#    DM4P::DM::Query
+sub order {
+   my ($self, $order_by) = @_;
+   $self->{"__query_options"}->{"order_by"} = $order_by;
+
+   return $self;
+}
+
+# 
+# Function: desc
+#
+#    Set the order of the query descending.
+#
+# Returns:
+#
+#    DM4P::DM::Query
+sub desc {
+   my ($self) = @_;
+   $self->{"__query_options"}->{"order_direction"} = "desc";
+
+   return $self;
+}
+
+# 
+# Function: asc
+#
+#    Set the order of the query ascending.
+#
+# Returns:
+#
+#    DM4P::DM::Query
+sub asc {
+   my ($self) = @_;
+   $self->{"order_direction"} = "asc";
+
+   return $self;
+}
+
 
 # ------------------------------------------------------------------------------
 # Group: Protected
