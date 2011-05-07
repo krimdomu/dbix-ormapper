@@ -6,6 +6,7 @@ use warnings;
 use base qw(DM4P::SQL::Query::Base);
 
 use DM4P::SQL::Query::SELECT::Join;
+use DM4P::SQL::Query::SELECT::Order;
 
 # ------------------------------------------------------------------------------
 # Group: Constructor
@@ -108,6 +109,25 @@ sub join {
    return $join;
 }
 
+# Function: order
+#
+#   Define the order of the SELECT
+#
+# Parameters:
+#
+#   String - Column to order by
+#
+# Returns:
+#
+#   DM4P::SQL::Query::SELECT::Order
+sub order {
+   my $self = shift;
+   my @order_by = @_;
+
+   $self->{'__order'} = DM4P::SQL::Query::SELECT::Order->new( query => $self, order_by => \@order_by );
+   return $self->{'__order'};
+}
+
 # ------------------------------------------------------------------------------
 # Group: Private
 # ------------------------------------------------------------------------------
@@ -161,6 +181,12 @@ sub __get_sql {
    if($self->{'__where'}) {
       $str .= " WHERE ";
       $str .= $class->get_where($self->{'__where'});
+   }
+
+   if($self->{'__order'}) {
+      $str .= " ORDER BY ";
+      $str .= $self->{'__order'}->order_by . " ";
+      $str .= $self->{'__order'}->direction
    }
    
    return $self->SUPER::__get_sql($class, $str);
