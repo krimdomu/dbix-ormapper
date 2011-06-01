@@ -5,6 +5,7 @@ use warnings;
 
 use Data::Dumper;
 use Want;
+use DM4P::Exception::DataTypeNotKnown;
 
 # ------------------------------------------------------------------------------
 # Group: Constructor
@@ -57,7 +58,7 @@ sub attr {
       } else {
          if(ref($self)) {
             # ein data object zurueckgeben
-            $ret_o = $self->get_data($attr);
+            $ret_o = $self->get_data($attr, $type);
          } else {
             # ein vergleichsobjekt zurueckgeben
             $ret_o = DM4P::DM::Comparable->new(ds => $class, model => $class, key => $attr);
@@ -132,12 +133,23 @@ sub get_fields {
 sub get_data {
 	my $self = shift;
 	my $key = shift;
+   my $type = shift;
 
    unless($key) {
       return $self->{'__data'};
    }
 
-	$self->{'__data'}->{$key};
+   my $data_type = $self->get_data_source()->class_type();
+   my $field_class = "DM4P::SQL::Dialects::${data_type}::Table::Column::Type::$type";
+   eval "use $field_class;";
+   if($@) {
+      DM4P::Exception::DataTypeNotKnown->throw(error => 'Data-Type ' . $type . ' not known to the underlying adapter. (' . $@ . ')');
+   }
+
+   my $data;
+   tie $data, $field_class, $self->{'__data'}->{$key};
+
+   return $data;
 }
 
 sub set_data_source {

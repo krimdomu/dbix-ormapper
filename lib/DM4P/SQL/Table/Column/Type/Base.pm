@@ -3,6 +3,12 @@ package DM4P::SQL::Table::Column::Type::Base;
 use strict;
 use warnings;
 
+require Exporter;
+use base qw(Exporter);
+
+use vars qw(@EXPORT);
+@EXPORT = qw(TIESCALAR FETCH STORE);
+
 # ------------------------------------------------------------------------------
 # Group: Constructor
 # ------------------------------------------------------------------------------
@@ -54,5 +60,32 @@ sub get_default_value {
    
    return "'" . $self->{'default'} . "'";
 }
+
+# ------------------------------------------------------------------------------
+# Group: Tie Functions
+# ------------------------------------------------------------------------------
+# Function: TIESCALAR
+#
+#   Creates the DM4P::SQL::Table::Column::Type::Base Object.
+#
+# Returns:
+#
+#   DM4P::SQL::Table::Column::Type::Base
+sub TIESCALAR {
+   my ($class, $data) = @_;
+   my $self = $class->new;
+   $self->{'__data'} = $data;
+   return $self;
+}
+
+sub FETCH {
+   my ($self) = @_;
+   return $self->{'__data'};
+}
+
+sub STORE {
+   die("not implemented... yet");
+}
+
 
 1;
