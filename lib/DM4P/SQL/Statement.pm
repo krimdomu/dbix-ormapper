@@ -111,7 +111,7 @@ sub execute {
       $self->{'sth'}->bind_param(@{$binds});
    }
    
-   $self->{'sth'}->execute() or DM4P::Exception::SQL->throw(error => $self->{'sth'}->errstr); 
+   $self->{'sth'}->execute() or DM4P::Exception::SQL->throw(error => $self->{'sth'}->errstr . "\n\nSQL:\n" . $self->query->to_s . "\n"); 
 
    return DM4P::SQL::ResultSet->new(sth => $self);
 }

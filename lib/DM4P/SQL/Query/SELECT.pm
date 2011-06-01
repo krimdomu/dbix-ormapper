@@ -128,6 +128,25 @@ sub order {
    return $self->{'__order'};
 }
 
+# Function: limit
+#
+#   Set limitations on returned records on a select
+#
+# Parameters:
+#
+#   Int - Number of records to return (top-most)
+#
+# Returns:
+#
+#   DM4P::SQL::Query::SELECT
+
+sub limit {
+   my $self = shift;
+   $self->{'__limit'} = shift;
+
+   return $self;
+}
+
 # ------------------------------------------------------------------------------
 # Group: Private
 # ------------------------------------------------------------------------------
@@ -187,6 +206,10 @@ sub __get_sql {
       $str .= " ORDER BY ";
       $str .= $self->{'__order'}->order_by . " ";
       $str .= $self->{'__order'}->direction
+   }
+
+   if($self->{'__limit'}) {
+      $str .= " " . $class->get_limit($self->{'__limit'});
    }
    
    return $self->SUPER::__get_sql($class, $str);

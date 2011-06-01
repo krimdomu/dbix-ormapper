@@ -37,17 +37,21 @@ sub get_select {
 		->where($qry);
 
    if($opt->{"order_by"}) {
-      $select = $select->order($opt->{"order_by"});
+      my $order = $select->order($opt->{"order_by"});
 
       if($opt->{"order_direction"} && $opt->{"order_direction"} eq "asc") {
-         $select = $select->asc();
+         $select = $order->asc();
       }
       elsif($opt->{"order_direction"} && $opt->{"order_direction"} eq "desc") {
-         $select = $select->desc();
+         $select = $order->desc();
       }
       else {
-         $select = $select->asc();
+         $select = $order->asc();
       }
+   }
+
+   if($opt->{"limit"}) {
+      $select->limit($opt->{"limit"});
    }
 
    return $select;

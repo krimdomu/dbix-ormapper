@@ -169,7 +169,25 @@ sub desc {
 #    DM4P::DM::Query
 sub asc {
    my ($self) = @_;
-   $self->{"order_direction"} = "asc";
+   $self->{"__query_options"}->{"order_direction"} = "asc";
+
+   return $self;
+}
+
+# Function: limit
+#
+#   Set limitations on returned records on a select
+#
+# Parameters:
+#
+#   Int - Number of records to return (top-most)
+#
+# Returns:
+#
+#   DM4P::DM::Query
+sub limit {
+   my $self = shift;
+   $self->{"__query_options"}->{"limit"} = shift;
 
    return $self;
 }
