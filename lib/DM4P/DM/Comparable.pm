@@ -9,6 +9,7 @@ use overload
 	'>'  => sub  { $_[0]->overload_compare(@_, '>'); },
 	'<'  => sub  { $_[0]->overload_compare(@_, '<'); },
 	'==' => sub  { $_[0]->overload_compare(@_, '='); },
+	'%'  => sub  { $_[0]->overload_compare(@_, ' LIKE '); },
 	'eq' => sub  { $_[0]->overload_compare(@_, '='); };
 
 # ------------------------------------------------------------------------------
