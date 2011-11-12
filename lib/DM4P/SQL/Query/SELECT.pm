@@ -128,6 +128,21 @@ sub order {
    return $self->{'__order'};
 }
 
+# 
+# Function: group
+#
+#    Set the grouping 
+#
+# Returns:
+#
+#    DM4P::DM::Query
+sub group {
+   my ($self, $group_by) = @_;
+   $self->{"__group"} = $group_by;
+
+   return $self;
+}
+
 # Function: limit
 #
 #   Set limitations on returned records on a select
@@ -200,6 +215,11 @@ sub __get_sql {
    if($self->{'__where'}) {
       $str .= " WHERE ";
       $str .= $class->get_where($self->{'__where'});
+   }
+
+   if($self->{'__group'}) {
+      $str .= " GROUP BY ";
+      $str .= $self->{"__group"};
    }
 
    if($self->{'__order'}) {

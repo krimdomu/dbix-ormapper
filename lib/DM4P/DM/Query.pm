@@ -174,6 +174,21 @@ sub asc {
    return $self;
 }
 
+# 
+# Function: group
+#
+#    Set the grouping 
+#
+# Returns:
+#
+#    DM4P::DM::Query
+sub group {
+   my ($self, $group_by) = @_;
+   $self->{"__query_options"}->{"group_by"} = $group_by;
+
+   return $self;
+}
+
 # Function: limit
 #
 #   Set limitations on returned records on a select
