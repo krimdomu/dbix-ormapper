@@ -50,6 +50,10 @@ sub get_select {
       }
    }
 
+   if($opt->{"group_by"}) {
+      $select->group($opt->{"group_by"});
+   }
+
    if($opt->{"limit"}) {
       $select->limit($opt->{"limit"});
    }
