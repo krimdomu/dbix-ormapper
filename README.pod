@@ -1,0 +1,116 @@
+=pod
+
+=head1 DM4P - DataMapper for Perl
+
+DM4P is a Database Abstraction Layer (dbal) and an Object Relational Mapper (ORM) for Perl.
+
+Yet it is in an early development stage. Comments and Suggestions are welcome.
+
+=head1 Example
+
+=head2 Creating Models
+
+=head3 Creating a new Model Class (User).
+
+ package Model::User;
+    
+ use strict;
+ use warnings;
+    
+ use base qw(DM4P::DM::DataSource::Table);
+    
+ __PACKAGE__->attr('id', 'Integer');
+ __PACKAGE__->attr('name', 'String');
+ __PACKAGE__->attr('email', 'String');
+ __PACKAGE__->attr('password', 'String');
+    
+ __PACKAGE__->table('users');
+ __PACKAGE__->primary_key('id');
+   
+ __PACKAGE__->has_n('Posts' => 'Model::Post', 'user_id');
+    
+ 1;
+
+
+=head3 Creating a second Model Class (Post).
+
+ package Model::Post;
+    
+ use strict;
+ use warnings;
+    
+ use base qw(DM4P::DM::DataSource::Table);
+   
+ __PACKAGE__->attr('id', 'Integer');
+ __PACKAGE__->attr('user_id', 'Integer');
+ __PACKAGE__->attr('title', 'String');
+ __PACKAGE__->attr('content', 'Text');
+   
+ __PACKAGE__->table('posts');
+ __PACKAGE__->primary_key('id');
+   
+ __PACKAGE__->belongs_to('User' => 'Model::User', 'post_id');
+    
+  1;
+
+
+=head2 Creating the Database Connection.
+
+ use DM4P;
+ use DM4P::Connection::Server::MySQL; # for a mysql connection
+ use DM4P::DM;
+   
+ use Model::User;
+ use Model::Post;
+   
+ DM4P::setup(default => "MySQL://localhost/mydb?username=foo&password=bar");
+    
+ eval {
+    my $db = DM4P::get_connection("default");
+    $db->connect;
+    
+    Model::User->set_data_source($db);
+    Model::Post->set_data_source($db);
+ };
+    
+ if($@) { die("Can't connect to database."); }
+  
+=head2 Accessing the Data
+
+Using find() to get a specific entry.
+
+ my $user = Model::User->find(5);
+ print "Username: " . $user->name . "\n";
+    
+ $user->name = "New-Name";
+ $user->update;
+    
+ my $new_user = Model::User->new(
+    name  => 'newUser',
+    email => 'foo@bar.com',
+    password => 'foobar44',
+ );
+ $new_user->save;
+    
+ 
+Using all() to find entries.
+
+ # SELECT * FROM posts WHERE user_id = 5
+ my $posts = Model::Post->all( Model::Post->user_id == 5 );
+ while(my $post = $posts->next) {
+    print "post: " . $post->id . "\n";
+ }
+  
+ # SELECT * FROM posts WHERE id > 5
+ my $posts = Model::Post->all( Model::Post->id > 5 );
+   
+ # Using relationship definitions
+ my $posts_by_user = $user->Posts;
+ while(my $post = $posts_by_user->next) {
+    print "post: " . $post->id . "\n";
+ }
+
+=head1 Questions?
+
+irc.freenode.net / #dm4p
+
