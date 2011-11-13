@@ -170,4 +170,11 @@ sub get_data_source {
    $$var;
 }
 
+sub find {
+   my $self = shift;
+   my $find = shift;
+
+   die("Must be overwritten by implementation");
+}
+
 1;
