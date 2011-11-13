@@ -177,4 +177,12 @@ sub find {
    die("Must be overwritten by implementation");
 }
 
+sub save {
+   my $self = shift;
+
+   die("Must be overwritten by implementation");
+}
+
+
+
 1;

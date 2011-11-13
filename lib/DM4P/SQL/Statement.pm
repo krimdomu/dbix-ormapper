@@ -89,6 +89,10 @@ sub query {
 sub execute {
    my $self = shift;
 
+   if($ENV{"DEBUG"}) {
+      print "SQL: " . $self->query->to_s . "\n";
+   }
+
    $self->{'sth'} = $self->db->get_connection->prepare($self->query->to_s);
    if($self->query->has_bind) {
       if(scalar(@{$self->{'__binds'}}) > 0) {

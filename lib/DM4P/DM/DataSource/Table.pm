@@ -164,8 +164,14 @@ sub update {
 sub _do_query {
    my ($self, $query, $do_update) = @_;
 
+      
+
    for my $key (keys %{$self->{'__data'}}) {
       $query->$key($self->{'__data'}->{$key});
+
+      if($ENV{"DEBUG"}) {
+         print "key: $key -> " . $self->{'__data'}->{$key} . "\n";
+      }
    }
 
    my $db = $self->get_data_source;
