@@ -135,6 +135,30 @@ sub dsn {
    return $str;
 }
 
+# Function: connect
+#
+#   Do some Adapter agnostic connection things.
+sub connect {
+   my $self = shift;
+
+   if($self->uri =~ m/characterEncoding=([a-zA-Z0-9_\-]+)/) {
+      $self->set_character_encoding($1);
+   }
+}
+
+# Function: set_character_encoding
+#   
+#   Set the character encoding of the database connection. 
+#   This function must be implemented by the adapter.
+#
+# Parameters:
+#
+#    String
+sub set_character_encoding {
+   my $self = shift;
+   my $enc  = shift;
+}
+
 # Function: get_statement
 #
 #   Returns a DM4P::SQL::Statement Object to query the current database.
