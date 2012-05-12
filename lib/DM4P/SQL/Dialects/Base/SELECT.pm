@@ -46,7 +46,7 @@ sub get_fields {
          $str .= ", ";
       }
       
-      $str .= $key;
+      $str .= "#".$key;
       $val =~ s/#//g;
       $str .= ' AS #' . $val;
    }
