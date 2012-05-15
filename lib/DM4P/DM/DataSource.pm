@@ -27,7 +27,13 @@ sub new {
 
 	bless($self, $proto);
 
-	$self->{'__data'} = { @_ };
+   my %fields = ref($self)->get_fields_info();
+
+	#$self->{'__data'} = { @_ };
+   my $values = { @_ };
+   for my $key (keys %{ $values }) {
+      $self->get_data($key, $fields{$key}, $values->{$key});
+   }
 
 	return $self;
 }
@@ -69,7 +75,7 @@ sub attr {
 	};
 
 	my $arr = $class . "::tbl_fields";
-	push(@$arr, [$attr]);
+	push(@$arr, {$attr => $type});
 }
 
 # ------------------------------------------------------------------------------
@@ -122,18 +128,27 @@ sub get_select {
 	}
 }
 
+sub get_fields_info {
+	my $class = shift;
+	my $arr = $class . "::tbl_fields";
+
+	no strict 'refs';
+   return map { (keys %$_, values %$_) } @$arr;
+}
+
 sub get_fields {
 	my $class = shift;
 	my $arr = $class . "::tbl_fields";
 
 	no strict 'refs';
-	return @$arr;
+   return map { [ keys %$_ ] } @$arr;
 }
 
 sub get_data {
 	my $self = shift;
 	my $key = shift;
    my $type = shift;
+   my $value = shift;
 
    unless($key) {
       return $self->{'__data'};
@@ -146,8 +161,10 @@ sub get_data {
       DM4P::Exception::DataTypeNotKnown->throw(error => 'Data-Type ' . $type . ' not known to the underlying adapter. (' . $@ . ')');
    }
 
-   my $data;
-   tie $data, $field_class, $self->{'__data'}->{$key};
+   my $data = $value;
+   $data ||= $self->{'__data'}->{$key};
+
+   tie $self->{'__data'}->{$key}, $field_class, $data;
 
    return $data;
 }
