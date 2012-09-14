@@ -46,8 +46,14 @@ sub get_fields {
          $str .= ", ";
       }
       
-      $str .= "#".$key;
-      $val =~ s/#//g;
+      # leicht unschoen...
+      if($key =~ m/^#/) {
+         $str .= $key;
+      }
+      else {
+         $str .= "#".$key;
+      }
+      $val =~ s/^#//;
       $str .= ' AS #' . $val;
    }
 
