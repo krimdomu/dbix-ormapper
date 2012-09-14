@@ -1,8 +1,8 @@
 =pod
 
-=head1 DM4P - DataMapper for Perl
+=head1 DBIx::ORMapper - ORM for Perl
 
-DM4P is a Database Abstraction Layer (dbal) and an Object Relational Mapper (ORM) for Perl.
+DBIx::ORMapper is a Database Abstraction Layer (dbal) and an Object Relational Mapper (ORM) for Perl.
 
 Yet it is in an early development stage. Comments and Suggestions are welcome.
 
@@ -17,7 +17,7 @@ Yet it is in an early development stage. Comments and Suggestions are welcome.
  use strict;
  use warnings;
     
- use base qw(DM4P::DM::DataSource::Table);
+ use base qw(DBIx::ORMapper::DM::DataSource::Table);
     
  __PACKAGE__->attr('id', 'Integer');
  __PACKAGE__->attr('name', 'String');
@@ -39,7 +39,7 @@ Yet it is in an early development stage. Comments and Suggestions are welcome.
  use strict;
  use warnings;
     
- use base qw(DM4P::DM::DataSource::Table);
+ use base qw(DBIx::ORMapper::DM::DataSource::Table);
    
  __PACKAGE__->attr('id', 'Integer');
  __PACKAGE__->attr('user_id', 'Integer');
@@ -56,17 +56,17 @@ Yet it is in an early development stage. Comments and Suggestions are welcome.
 
 =head2 Creating the Database Connection.
 
- use DM4P;
- use DM4P::Connection::Server::MySQL; # for a mysql connection
- use DM4P::DM;
+ use DBIx::ORMapper;
+ use DBIx::ORMapper::Connection::Server::MySQL; # for a mysql connection
+ use DBIx::ORMapper::DM;
    
  use Model::User;
  use Model::Post;
    
- DM4P::setup(default => "MySQL://localhost/mydb?username=foo&password=bar");
+ DBIx::ORMapper::setup(default => "MySQL://localhost/mydb?username=foo&password=bar");
     
  eval {
-    my $db = DM4P::get_connection("default");
+    my $db = DBIx::ORMapper::get_connection("default");
     $db->connect;
     
     Model::User->set_data_source($db);
@@ -110,7 +110,4 @@ Using all() to find entries.
     print "post: " . $post->id . "\n";
  }
 
-=head1 Questions?
-
-irc.freenode.net / #dm4p
 
