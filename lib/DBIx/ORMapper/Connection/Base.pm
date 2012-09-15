@@ -12,6 +12,7 @@ use DBIx::ORMapper::SQL::Query::INSERT;
 use DBIx::ORMapper::SQL::Query::DELETE;
 use DBIx::ORMapper::SQL::Query::UPDATE;
 use DBIx::ORMapper::SQL::Query::CREATE;
+use DBIx::ORMapper::SQL::Query::DROP;
 use DBIx::ORMapper::SQL::Query::ALTER;
 use DBIx::ORMapper::SQL::Query::SQL;
 

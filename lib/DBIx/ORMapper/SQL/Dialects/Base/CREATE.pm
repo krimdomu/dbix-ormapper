@@ -24,25 +24,6 @@ sub new {
    return $self;
 }
 
-# Function: get_table
-#
-#   Returns the SQL String for the tables.
-#
-# Parameters:
-#
-#   String - Table
-#
-# Returns:
-# 
-#   String
-sub get_table {
-   my $self = shift;
-   
-   my $t = shift;
-   
-   return "#$t";
-}
-
 # Function: get_index
 #
 #   Returns the indx.

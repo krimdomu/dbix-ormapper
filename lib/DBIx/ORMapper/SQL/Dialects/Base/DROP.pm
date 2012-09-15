@@ -1,4 +1,4 @@
-package DBIx::ORMapper::SQL::Dialects::Base::DELETE;
+package DBIx::ORMapper::SQL::Dialects::Base::DROP;
 
 use strict;
 use warnings;
@@ -10,11 +10,11 @@ use base qw(DBIx::ORMapper::SQL::Dialects::Base);
 # ------------------------------------------------------------------------------
 # Function: new
 #
-#   Creates an new DBIx::ORMapper::SQL::Query Object.
+#   Creates an new DBIx::ORMapper::SQL::Dialects::Base::CREATE Object.
 #
 # Returns:
 #
-#   DBIx::ORMapper::SQL::Dialects::MySQL::DELETE
+#   DBIx::ORMapper::SQL::Dialects::Base::CREATE
 sub new {
    my $that = shift;
    my $proto = ref($that) || $that;
@@ -23,26 +23,4 @@ sub new {
    bless($self, $proto);
    return $self;
 }
-
-
-# Function: get_where
-#
-#   Returns the SQL String for WHERE clause.
-#
-# Parameters:
-#
-#   String
-#
-# Returns:
-#
-#   String
-sub get_where {
-   my $self = shift;
-   my $where = shift;
-   
-   my $str = $self->parse_names($where);
-   
-   return $str;
-}
-
 1;
