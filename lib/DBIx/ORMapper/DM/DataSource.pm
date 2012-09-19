@@ -162,7 +162,7 @@ sub get_data {
    }
 
    my $data = $value;
-   $data ||= $self->{'__data'}->{$key};
+   $data //= $self->{'__data'}->{$key};
 
    tie $self->{'__data'}->{$key}, $field_class, $data;
 
