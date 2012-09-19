@@ -84,7 +84,8 @@ sub FETCH {
 }
 
 sub STORE {
-   die("not implemented... yet");
+   my ($self, $value) = @_;
+   $self->{'__data'} = $value;
 }
 
 
