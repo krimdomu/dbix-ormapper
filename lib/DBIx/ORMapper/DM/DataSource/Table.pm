@@ -20,7 +20,7 @@ use Data::Dumper;
 sub new {
    my $that = shift;
    my $proto = ref($that) || $that;
-      my $self = $proto->SUPER::new(@_);
+   my $self = $proto->SUPER::new(@_);
 
    bless($self, $proto);
 
@@ -163,8 +163,6 @@ sub update {
 
 sub _do_query {
    my ($self, $query, $do_update) = @_;
-
-      
 
    for my $key (keys %{$self->{'__data'}}) {
       $query->$key($self->{'__data'}->{$key});
