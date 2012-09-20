@@ -126,8 +126,13 @@ sub fields {
 #   $self
 sub primary_key {
    my $self = shift;
+   my @keys = @_;
    
-   $self->{'__primary_key'} = shift;
+   for my $k (@keys) {
+      $self->{'__primary_key'} .= "#$k,";
+   }
+
+   $self->{'__primary_key'} =~ s/,$//;
    
    return $self;
 }
