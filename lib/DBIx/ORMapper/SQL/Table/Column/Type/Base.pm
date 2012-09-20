@@ -41,7 +41,8 @@ sub get_sql_type {
 
    return $self->{'__sql_type'} 
       . ($self->{'size'}?'(' . $self->{'size'} . ')':'') # size
-      . ($self->{'default'}?" DEFAULT " . $self->get_default_value():''); # default value
+      . (exists $self->{'null'} && $self->{'null'}==0?' NOT NULL ':'') # null?
+      . ($self->{'default'}?' DEFAULT ' . $self->get_default_value():''); # default value
 }
 
 # Function: get_default_value
