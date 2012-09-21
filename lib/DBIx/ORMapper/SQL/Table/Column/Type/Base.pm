@@ -42,7 +42,8 @@ sub get_sql_type {
    return $self->{'__sql_type'} 
       . ($self->{'size'}?'(' . $self->{'size'} . ')':'') # size
       . (exists $self->{'null'} && $self->{'null'}==0?' NOT NULL ':'') # null?
-      . ($self->{'default'}?' DEFAULT ' . $self->get_default_value():''); # default value
+      . ($self->{'default'}?' DEFAULT ' . $self->get_default_value():'') # default value
+      . $self->get_column_options();
 }
 
 # Function: get_default_value
@@ -60,6 +61,18 @@ sub get_default_value {
    }
    
    return "'" . $self->{'default'} . "'";
+}
+
+# Function: get_column_options
+#
+#   Returns optional column options. For create statements.
+#
+# Returns:
+#
+#   String
+sub get_column_options {
+   my $self = shift;
+   return "";
 }
 
 # ------------------------------------------------------------------------------
