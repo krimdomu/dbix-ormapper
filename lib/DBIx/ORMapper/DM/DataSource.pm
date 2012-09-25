@@ -194,6 +194,13 @@ sub find {
    die("Must be overwritten by implementation");
 }
 
+sub delete {
+   my $self = shift;
+   my $find = shift;
+
+   die("Must be overwritten by implementation");
+}
+
 sub save {
    my $self = shift;
 

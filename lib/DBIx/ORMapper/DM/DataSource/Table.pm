@@ -161,6 +161,16 @@ sub update {
    $self->_do_query($update, 1);
 }
 
+sub delete {
+   my ($self) = @_;
+
+   my $delete = DBIx::ORMapper::SQL::Query::DELETE->new()
+                                       ->table($self->table)
+                                       ->where('#' . $self->table . '.#' . $self->primary_key . ' = ?');
+
+   $self->_execute_query($delete, 1);
+}
+
 sub _do_query {
    my ($self, $query, $do_update) = @_;
 
@@ -172,14 +182,21 @@ sub _do_query {
       }
    }
 
+   $self->_execute_query($query, $do_update);
+}
+
+sub _execute_query {
+   my ($self, $query, $do_bind_primary) = @_;
+
    my $db = $self->get_data_source;
    my $stm = $db->get_statement($query);
 
-   if($do_update) {
+   if($do_bind_primary) {
       $stm->bind(1, $self->{'__data'}->{$self->primary_key});
    }
 
    $stm->execute;
+
 }
 
 
