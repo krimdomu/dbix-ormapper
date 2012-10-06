@@ -105,7 +105,7 @@ sub primary_key {
    }
 }
 
-sub belongs_to {
+sub has_n {
    my ($class, $name, $join_pkg, $join_col, $opts) = @_;
 
    no strict 'refs';
@@ -125,7 +125,7 @@ sub has {
    $class->has_n(@_);
 }
 
-sub has_n {
+sub belongs_to {
    my ($class, $name, $join_pkg, $join_col, $opts) = @_;
 
    no strict 'refs';
