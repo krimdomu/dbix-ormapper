@@ -13,7 +13,7 @@ require Exporter;
 use base qw(Exporter);
 
 use vars qw(@EXPORT);
-@EXPORT = qw(SELECT INSERT UPDATE DELETE CREATE ALTER DROP);
+@EXPORT = qw(SELECT INSERT UPDATE DELETE CREATE ALTER DROP LAST_INSERT_ID);
 
 use DBIx::ORMapper::SQL::Query::SELECT;
 use DBIx::ORMapper::SQL::Query::INSERT;
@@ -22,6 +22,7 @@ use DBIx::ORMapper::SQL::Query::UPDATE;
 use DBIx::ORMapper::SQL::Query::ALTER;
 use DBIx::ORMapper::SQL::Query::CREATE;
 use DBIx::ORMapper::SQL::Query::DROP;
+use DBIx::ORMapper::SQL::Query::LAST_INSERT_ID;
 
 sub SELECT {
    return DBIx::ORMapper::SQL::Query::SELECT->new;
@@ -50,5 +51,10 @@ sub CREATE {
 sub DROP {
    return DBIx::ORMapper::SQL::Query::DROP->new;
 }
+
+sub LAST_INSERT_ID {
+   return DBIx::ORMapper::SQL::Query::LAST_INSERT_ID->new;
+}
+
 
 1;

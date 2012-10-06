@@ -15,6 +15,7 @@ use DBIx::ORMapper::SQL::Query::CREATE;
 use DBIx::ORMapper::SQL::Query::DROP;
 use DBIx::ORMapper::SQL::Query::ALTER;
 use DBIx::ORMapper::SQL::Query::SQL;
+use DBIx::ORMapper::SQL::Query::LAST_INSERT_ID;
 
 use DBIx::ORMapper::SQL::Dialects::DialectBase;
 

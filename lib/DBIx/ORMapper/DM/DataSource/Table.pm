@@ -149,6 +149,18 @@ sub save {
    my $insert = DBIx::ORMapper::SQL::Query::INSERT->new()
                                        ->table($self->table);
    $self->_do_query($insert);
+
+   if(! $self->{__data}->{$self->primary_key}) {
+      # if primary key is not set/loaded, load the complete record from db
+      my $last_inserted_id_qry = DBIx::ORMapper::SQL::Query::LAST_INSERT_ID->new();
+      my $res = $self->_execute_query($last_inserted_id_qry);
+      my $row = $res->next;
+      
+      my $p_key = $self->primary_key;
+      my $tmp_r = ref($self)->all( ref($self)->$p_key == $row->{id} );
+      my $tmp = $tmp_r->next;
+      $self->{__data} = $tmp->{__data};
+   }
 }
 
 sub update {
