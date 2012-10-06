@@ -227,7 +227,13 @@ sub _get_parts_sql_where {
             push(@{$self->{'__bind_params'}}, @{$subpart->{'__bind_params'}});
          } elsif(ref($subpart) eq "DBIx::ORMapper::DM::Query::Part") {
             push(@where, "".$subpart);
-            push(@{$self->{'__bind_params'}}, $subpart->val);
+            my $val = $subpart->val;
+            if(ref($val) eq "ARRAY") {
+               push(@{$self->{'__bind_params'}}, @{ $subpart->val });
+            }
+            else {
+               push(@{$self->{'__bind_params'}}, $subpart->val);
+            }
          } else {
             push(@where, $subpart);
          }

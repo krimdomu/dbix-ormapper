@@ -40,7 +40,22 @@ sub new {
 # ------------------------------------------------------------------------------
 sub to_s {
    my $self = shift;
-   return $self->type . " " . "#" . $self->model->table . ".#" . $self->key . " " . $self->operator . " ?";
+
+   if(ref($self->val) eq "ARRAY") {
+      my $str = $self->type . " " . "#" . $self->model->table . ".#" . $self->key . " IN(";
+
+      for my $i (@{$self->val}) {
+         $str .= "?,";
+      }
+
+      $str = substr($str, 0, -1); # remove last ","
+      $str .= ")";
+
+      return $str;
+   }
+   else {
+      return $self->type . " " . "#" . $self->model->table . ".#" . $self->key . " " . $self->operator . " ?";
+   }
 }
 
 sub or {
