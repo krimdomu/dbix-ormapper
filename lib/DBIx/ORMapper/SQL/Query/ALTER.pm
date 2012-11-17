@@ -105,6 +105,20 @@ sub drop {
    return $self;
 }
 
+# Function: modify
+#
+#   Modify a colum of a table.
+#
+# Returns:
+#
+#   $self
+sub modify {
+   my $self = shift;
+
+   $self->{'__action'} = 'MODIFY';
+
+   return $self;
+}
 
 # Function: column
 #
