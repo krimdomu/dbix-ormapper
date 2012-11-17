@@ -53,7 +53,14 @@ sub get_fields {
       else {
          $str .= "#".$key;
       }
+
+      if($val =~ m/\./) {
+         my @x = split(/\./, $val);
+         $val = $x[1];
+      }
+
       $val =~ s/^#//;
+
       $str .= ' AS #' . $val;
    }
 

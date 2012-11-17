@@ -35,6 +35,8 @@ sub new {
       $self->get_data($key, $fields{$key}, $values->{$key});
    }
 
+   $self->{__join} = [];
+
    return $self;
 }
 
@@ -95,7 +97,16 @@ sub attr {
 #    DBIx::ORMapper::DM::Query
 sub all {
    my $self = shift;
-   return DBIx::ORMapper::DM::Query->new(ds => $self, model => $self->model, @_);
+
+   # check if we need to join
+   my @join;
+   for my $p (@_) {
+      if($p->ds ne $self) {
+         push(@join, $p->ds);
+      }
+   }
+
+   return DBIx::ORMapper::DM::Query->new(ds => $self, model => $self->model, join => \@join, @_);
 }
 
 # Function: model
@@ -133,6 +144,7 @@ sub get_fields_info {
    my $arr = $class . "::tbl_fields";
 
    no strict 'refs';
+   
    return map { (keys %$_, values %$_) } @$arr;
 }
 
@@ -141,7 +153,8 @@ sub get_fields {
    my $arr = $class . "::tbl_fields";
 
    no strict 'refs';
-   return map { [ keys %$_ ] } @$arr;
+
+   return map { [ $_->[0] = "#" . $class->model . ".#" . $_->[0] ] } map { [ keys %$_ ] } @$arr;
 }
 
 sub get_data {

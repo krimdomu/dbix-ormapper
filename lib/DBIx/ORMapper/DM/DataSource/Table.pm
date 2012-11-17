@@ -6,6 +6,8 @@ use warnings;
 use base qw(DBIx::ORMapper::DM::DataSource);
 use Data::Dumper;
 
+use vars qw(%__join_key);
+
 # ------------------------------------------------------------------------------
 # Group: Constructor
 # ------------------------------------------------------------------------------
@@ -105,10 +107,17 @@ sub primary_key {
    }
 }
 
+sub get_join_key_for {
+   my ($class, $obj) = @_;
+   return $__join_key{$obj};
+}
+
 sub has_n {
    my ($class, $name, $join_pkg, $join_col, $opts) = @_;
 
    no strict 'refs';
+
+   $__join_key{$join_pkg} = $join_col;
 
    *{"${class}::$name"} = sub {
       my $self = shift;
@@ -129,6 +138,8 @@ sub belongs_to {
    my ($class, $name, $join_pkg, $join_col, $opts) = @_;
 
    no strict 'refs';
+
+   $__join_key{$join_pkg} = $join_col;
 
    *{"${class}::$name"} = sub {
       my $self = shift;

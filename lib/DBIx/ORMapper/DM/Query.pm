@@ -31,7 +31,7 @@ sub new {
    bless($self, $proto);
 
    if($_[0]) {
-      for my $d (0..1) {
+      for my $d (0..2) {
          $self->{$_[0]} = $_[1];
          shift; shift;
       }
@@ -91,6 +91,19 @@ sub next {
    if($self->{'__query_done'} == 0) {
       my $select = $self->ds->get_select($self->to_s, %{ $self->{"__query_options"} });
       $select->fields($self->ds->get_fields());
+
+      # check if we need to join
+      if(scalar(@{ $self->{join} }) > 0) {
+         for my $join_class (@{ $self->{join} }) {
+            my $join_table = $join_class->table;
+            my $join_table_key = $join_class->get_join_key_for($self->{ds});
+            my $self_table = $self->ds->table;
+            my $self_pk = $self->ds->primary_key;
+
+            $select->join($join_table)->on("#$join_table.#$join_table_key = #$self_table.#$self_pk");
+         }
+      }
+
       $self->{'__stm'} = $self->db->get_statement($select);
 
       my $i=0;
