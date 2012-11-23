@@ -1,0 +1,24 @@
+Source: dbix-ormapper-perl
+Section: admin
+Priority: optional
+Maintainer: Jan Gehring <jan.gehring@gmail.com>
+Build-Depends: debhelper (>= 7),
+                  perl (>= 5.10.0),
+                  libexception-class-perl,
+                  libdbi-perl,
+                  libwww-perl,
+                  libwant-perl
+
+Standards-Version: 3.9.1
+Homepage: http://github.com/krimdomu/dbix-ormapper
+
+Package: rex
+Architecture: all
+Depends: ${misc:Depends},
+            ${perl:Depends},
+            libwww-perl,
+            libexception-class-perl,
+            libdbi-perl,
+            libwant-perl
+Description: DBIx::ORMapper
+ A simple ORMapper for Perl.
