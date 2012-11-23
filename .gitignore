@@ -10,3 +10,4 @@ debian/substvars
 pm_to_blib
 debian/*.log
 *.bak
+MYMETA.*
