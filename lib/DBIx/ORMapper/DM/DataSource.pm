@@ -154,7 +154,7 @@ sub get_fields {
 
    no strict 'refs';
 
-   return map { [ $_->[0] = "#" . $class->model . ".#" . $_->[0] ] } map { [ keys %$_ ] } @$arr;
+   return map { [ $_->[0] = ($class->model ? "#" . $class->model . "." : "") . "#" . $_->[0] ] } map { [ keys %$_ ] } @$arr;
 }
 
 sub get_data {
