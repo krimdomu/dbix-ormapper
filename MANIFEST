@@ -15,11 +15,14 @@ lib/DBIx/ORMapper/Exception/KeyNotFound.pm
 lib/DBIx/ORMapper/Exception/SQL.pm
 lib/DBIx/ORMapper/Exception/SQL/ColumnNotFound.pm
 lib/DBIx/ORMapper/Exception/WrongFormat.pm
+lib/DBIx/ORMapper/Helper.pm
 lib/DBIx/ORMapper/SQL/Dialects/Base.pm
 lib/DBIx/ORMapper/SQL/Dialects/Base/ALTER.pm
 lib/DBIx/ORMapper/SQL/Dialects/Base/CREATE.pm
 lib/DBIx/ORMapper/SQL/Dialects/Base/DELETE.pm
+lib/DBIx/ORMapper/SQL/Dialects/Base/DROP.pm
 lib/DBIx/ORMapper/SQL/Dialects/Base/INSERT.pm
+lib/DBIx/ORMapper/SQL/Dialects/Base/LAST_INSERT_ID.pm
 lib/DBIx/ORMapper/SQL/Dialects/Base/SELECT.pm
 lib/DBIx/ORMapper/SQL/Dialects/Base/SQL.pm
 lib/DBIx/ORMapper/SQL/Dialects/Base/UPDATE.pm
@@ -28,8 +31,10 @@ lib/DBIx/ORMapper/SQL/Query/ALTER.pm
 lib/DBIx/ORMapper/SQL/Query/Base.pm
 lib/DBIx/ORMapper/SQL/Query/CREATE.pm
 lib/DBIx/ORMapper/SQL/Query/DELETE.pm
+lib/DBIx/ORMapper/SQL/Query/DROP.pm
 lib/DBIx/ORMapper/SQL/Query/FieldSet.pm
 lib/DBIx/ORMapper/SQL/Query/INSERT.pm
+lib/DBIx/ORMapper/SQL/Query/LAST_INSERT_ID.pm
 lib/DBIx/ORMapper/SQL/Query/SELECT.pm
 lib/DBIx/ORMapper/SQL/Query/SELECT/Join.pm
 lib/DBIx/ORMapper/SQL/Query/SELECT/Order.pm
@@ -42,7 +47,6 @@ lib/DBIx/ORMapper/SQL/Table/Column/Type/Base.pm
 Makefile.PL
 MYMETA.json
 MYMETA.yml
-README
 t/basic.t
 t/dm.t
 t/query.t
