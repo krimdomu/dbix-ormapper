@@ -8,11 +8,10 @@ Build-Depends: debhelper (>= 7),
                   libdbi-perl,
                   libwww-perl,
                   libwant-perl
-
 Standards-Version: 3.9.1
 Homepage: http://github.com/krimdomu/dbix-ormapper
 
-Package: rex
+Package: dbix-ormapper-perl
 Architecture: all
 Depends: ${misc:Depends},
             ${perl:Depends},
