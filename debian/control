@@ -1,4 +1,4 @@
-Source: dbix-ormapper-perl
+Source: libdbix-ormapper-perl
 Section: admin
 Priority: optional
 Maintainer: Jan Gehring <jan.gehring@gmail.com>
@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 7),
 Standards-Version: 3.9.1
 Homepage: http://github.com/krimdomu/dbix-ormapper
 
-Package: dbix-ormapper-perl
+Package: libdbix-ormapper-perl
 Architecture: all
 Depends: ${misc:Depends},
             ${perl:Depends},

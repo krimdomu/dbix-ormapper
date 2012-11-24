@@ -1,4 +1,4 @@
-dbix-ormapper-perl (0.0.1) unstable; urgency=low
+libdbix-ormapper-perl (0.0.1) unstable; urgency=low
   * init
 
  -- Jan Gehring <jan.gehring@gmail.com>  Fri, 23 Nov 2012 21:50:00 +0200
