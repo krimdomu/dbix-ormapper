@@ -106,17 +106,17 @@ sub all {
       }
    }
 
-   return DBIx::ORMapper::DM::Query->new(ds => $self, model => $self->model, join => \@join, @_);
+   return DBIx::ORMapper::DM::Query->new(ds => $self, model => $self->get_model, join => \@join, @_);
 }
 
-# Function: model
+# Function: get_model
 #
 #    Returns the Model name.
 #
 # Returns:
 #
 #    String - Modelname
-sub model {
+sub get_model {
    my $self = shift;
    my $model;
    if(ref($model)) {
@@ -126,7 +126,6 @@ sub model {
       my $var = $self . "::db_table";
       $model = $$var;
    }
-
    return $model;
 }
 
@@ -154,7 +153,7 @@ sub get_fields {
 
    no strict 'refs';
 
-   return map { [ $_->[0] = ($class->model ? "#" . $class->model . "." : "") . "#" . $_->[0] ] } map { [ keys %$_ ] } @$arr;
+   return map { [ $_->[0] = ($class->get_model ? "#" . $class->get_model . "." : "") . "#" . $_->[0] ] } map { [ keys %$_ ] } @$arr;
 }
 
 sub get_data {

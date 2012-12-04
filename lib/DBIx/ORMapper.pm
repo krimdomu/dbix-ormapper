@@ -7,7 +7,7 @@ use DBIx::ORMapper::Connection::Base;
 use DBIx::ORMapper::Exception::Connect;
 use DBIx::ORMapper::Exception::ConnectionNotFound;
 
-our $VERSION='0.0.1';
+our $VERSION='0.0.2';
 
 use vars qw(%connections);
 
