@@ -109,7 +109,8 @@ sub primary_key {
 
 sub get_join_key_for {
    my ($class, $obj) = @_;
-   return $__join_key{$obj};
+   my $c = ref($class) || $class;
+   return $__join_key{"$c|$obj"};
 }
 
 sub has_n {
@@ -117,7 +118,7 @@ sub has_n {
 
    no strict 'refs';
 
-   $__join_key{$join_pkg} = $join_col;
+   $__join_key{"$class|$join_pkg"} = $join_col;
 
    *{"${class}::$name"} = sub {
       my $self = shift;
@@ -139,7 +140,7 @@ sub belongs_to {
 
    no strict 'refs';
 
-   $__join_key{$join_pkg} = $join_col;
+   $__join_key{"$class|$join_pkg"} = $join_col;
 
    *{"${class}::$name"} = sub {
       my $self = shift;
