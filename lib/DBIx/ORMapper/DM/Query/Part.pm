@@ -62,14 +62,14 @@ sub or {
    my $self = shift;
    $_[0]->type = '';
    $_[1]->type = 'OR';
-   return DBIx::ORMapper::DM::Query->new(ds => $self->ds, model => $self->model, @_);
+   return DBIx::ORMapper::DM::Query->new(ds => $self->ds, model => $self->model, join => [], @_);
 }
 
 sub and {
    my $self = shift;
    $_[0]->type = '';
    $_[1]->type = 'AND';
-   return DBIx::ORMapper::DM::Query->new(ds => $self->ds, model => $self->model, @_);
+   return DBIx::ORMapper::DM::Query->new(ds => $self->ds, model => $self->model, join => [], @_);
 }
 
 # ------------------------------------------------------------------------------

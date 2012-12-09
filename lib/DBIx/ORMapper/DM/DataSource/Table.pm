@@ -86,7 +86,7 @@ sub find {
    my $find = shift;
 
    my $pk = $self->primary_key;
-   return DBIx::ORMapper::DM::Query->new(ds => $self, model => $self->get_model, $self->$pk == $find)->next;
+   return DBIx::ORMapper::DM::Query->new(ds => $self, model => $self->get_model, join => [], $self->$pk == $find)->next;
 }
 
 

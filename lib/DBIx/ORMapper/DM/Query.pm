@@ -55,7 +55,7 @@ sub new {
 #    Overload + and |
 sub or {
    my $self = shift;
-   return DBIx::ORMapper::DM::Query->new(ds => $self->ds, model => $self->model, $_[0], 'OR', $_[1]);
+   return DBIx::ORMapper::DM::Query->new(ds => $self->ds, model => $self->model, join => [], $_[0], 'OR', $_[1]);
 }
 
 # Function: and
@@ -63,7 +63,7 @@ sub or {
 #    Overload - and &
 sub and {
    my $self = shift;
-   return DBIx::ORMapper::DM::Query->new(ds => $self->ds, model => $self->model, $_[0], 'AND', $_[1]);
+   return DBIx::ORMapper::DM::Query->new(ds => $self->ds, model => $self->model, join => [], $_[0], 'AND', $_[1]);
 }
 
 # Function: to_s
